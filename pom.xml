@@ -28,7 +28,6 @@
         <pagehelper>1.4.6</pagehelper>
         <nashorn-core>15.4</nashorn-core>
         <esayexcel>3.1.3</esayexcel>
-        <easy-captcha>1.6.2</easy-captcha>
         <mybatis>3.5.11</mybatis>
         <mybatis-plus>3.5.5</mybatis-plus>
         <mysql-connector-j>8.0.33</mysql-connector-j>
@@ -104,16 +103,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-cache</artifactId>
                 <version>${spring-boot-starter-cache}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.whvcse</groupId>
-                <artifactId>easy-captcha</artifactId>
-                <version>${easy-captcha}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.openjdk.nashorn</groupId>
-                <artifactId>nashorn-core</artifactId>
-                <version>${nashorn-core}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>

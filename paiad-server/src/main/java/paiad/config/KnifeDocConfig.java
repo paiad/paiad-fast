@@ -21,14 +21,14 @@ public class KnifeDocConfig {
     @Value("${server.servlet.context-path:}")
     private String prefix;
 
-    private String star = "\uD83C\uDF1F -> ";
+    private String star = "\uD83C\uDF1F --> ";
     @PostConstruct
     public void init() {
         List<String> ipAddresses = getAllIpAddresses();
 
         StringBuilder sb = new StringBuilder();
         sb.append("\n---------------------------------------------------\n");
-        sb.append("文档地址:\n");
+        sb.append("Knife4j文档地址:\n");
 
         // 添加localhost
         sb.append(star).append("http://localhost:").append(port).append(prefix).append("/doc.html\n");
