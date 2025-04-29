@@ -57,7 +57,7 @@
         port: 6379
         password: your_password
     ```
-4. 启动项目：
+4. 启动项目(paiad-server)：
    Run application
 
 5. 打开接口文档：
