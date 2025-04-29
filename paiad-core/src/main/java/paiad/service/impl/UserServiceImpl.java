@@ -19,6 +19,7 @@ import paiad.pojo.vo.UserVO;
 import paiad.service.IUserService;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -91,6 +92,30 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(user,userVO);
         return SaResult.data(userVO);
+    }
+
+    /**
+     * 获取当前用户操作权限
+     * */
+    public SaResult getPermission(){
+        List<String> permissionList = StpUtil.getPermissionList();
+        return SaResult.data(permissionList);
+    }
+
+    /**
+     * 获取当前用户角色
+     * */
+    public SaResult getRole(){
+        List<String> roleList = StpUtil.getRoleList();
+        return SaResult.data(roleList);
+    }
+
+    /**
+     * 用户登出
+     * */
+    public SaResult logout(){
+        StpUtil.logout();
+        return SaResult.ok();
     }
 
 

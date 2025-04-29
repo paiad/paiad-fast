@@ -23,13 +23,13 @@ public class UserController {
     private HttpServletRequest request;
 
     @PostMapping("register")
-    @Operation(summary = "注册")
+    @Operation(summary = "用户注册")
     public SaResult register(@RequestBody @Valid UserDTO userDTO) {
         return userService.register(userDTO);
     }
 
     @PostMapping("login")
-    @Operation(summary = "登录")
+    @Operation(summary = "用户登录")
     public SaResult login(@RequestBody @Valid UserDTO userDTO) {
         return userService.login(userDTO, request.getRemoteAddr());
     }
@@ -43,9 +43,26 @@ public class UserController {
     @GetMapping("info")
     @Operation(summary = "用户信息")
     public SaResult getUserInfo() {
-        System.out.println(StpUtil.getPermissionList());
         Object userInfo = StpUtil.getSession().get("userInfo");
         return userService.getUserInfo(userInfo);
+    }
+
+    @GetMapping("permission")
+    @Operation(summary = "用户权限")
+    public SaResult getPermission() {
+        return userService.getPermission();
+    }
+
+    @GetMapping("role")
+    @Operation(summary = "用户角色")
+    public SaResult getRole() {
+        return userService.getRole();
+    }
+
+    @PostMapping("logout")
+    @Operation(summary = "用户登出")
+    public SaResult logout() {
+        return userService.logout();
     }
 
 }
