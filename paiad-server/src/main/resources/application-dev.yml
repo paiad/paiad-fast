@@ -26,3 +26,26 @@ spring:
           max-idle: 10
           # 连接池中的最小空闲连接
           min-idle: 0
+
+# mqtt
+mqtt:
+  broker:
+    host: localhost
+    port: 1883
+    protocol: tcp
+  client:
+    client-id: paiad-mqttv5-client
+    clean-start: true
+    session-expiry-interval: 60
+    automatic-reconnect: true
+  credentials:
+    username: "admin"
+    password: "123456"
+  topics:
+    publish:
+      - topic: emqx/publish
+        qos: 1
+    subscribe:
+      - topic: emqx/subscribe
+        qos: 1
+

@@ -58,8 +58,8 @@
         password: your_password
     ```
 4. 启动项目(paiad-server)：
-   >[!important]
-   >Run application
+>[!important]
+>Run application
 
 5. 打开接口文档：
    ```
