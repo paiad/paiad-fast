@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user/")
 public class UserController {
-    @PostMapping("doLogin")
+    @PostMapping("login")
     public String doLogin(String username, String password) {
         if("zhang".equals(username) && "123456".equals(password)) {
             StpUtil.login(10001);

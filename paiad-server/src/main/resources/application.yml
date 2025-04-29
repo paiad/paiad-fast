@@ -18,12 +18,13 @@ springdoc:
 # knife4j 的增强配置
 knife4j:
   enable: true
-  basic:
-    enable: true # 进入界面是否需要账号密码
-    username: 0zrthhci
-    password: 71d1c3a6
   setting:
     language: zh_cn
+#  basic:
+#    enable: true # 进入界面是否需要账号密码
+#    username: 0zrthhci
+#    password: 71d1c3a6
+
 
 ############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 sa-token:
