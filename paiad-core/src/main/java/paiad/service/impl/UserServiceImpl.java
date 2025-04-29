@@ -3,6 +3,7 @@ package paiad.service.impl;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.crypto.digest.BCrypt;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -35,7 +36,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         // 创建新用户
         User user = new User();
-        user.setId(System.currentTimeMillis()); // 简单生成 ID（生产环境建议使用更可靠的 ID 生成策略）
+        user.setId(generateId());
         user.setUsername(userDTO.getUsername());
         user.setPassword(encodePassword(userDTO.getPassword())); // 加密密码
         user.setStatus(1);
@@ -71,6 +72,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     /**
+     * 判断当前用户是否登录
+     * */
+    public SaResult isLogin(){
+        return SaResult.data("当前会话是否登录：" + StpUtil.isLogin());
+    }
+
+    /**************************************private method*************************************/
+    /**
      * 根据用户名查询用户
      */
     private User findByUsername(String username) {
@@ -102,5 +111,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setIpAddress(ipAddress);
         user.setLastLoginTime(loginTime);
         userMapper.updateById(user);
+    }
+
+    /**
+     * 使用雪花算法生成唯一 ID
+     */
+    private Long generateId() {
+        long workerId = 1L;
+        long datacenterId = 1L;
+        return IdUtil.getSnowflake(workerId, datacenterId).nextId();
     }
 }

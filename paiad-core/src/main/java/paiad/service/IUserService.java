@@ -12,4 +12,5 @@ import java.time.LocalDateTime;
 public interface IUserService extends IService<User> {
     SaResult register(UserDTO userDTO);
     SaResult login(UserDTO userDTO, String ipAddress);
+    SaResult isLogin();
 }
