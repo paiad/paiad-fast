@@ -64,23 +64,40 @@ public class MqttClientManager {
 
     @PostConstruct
     public void connect() throws MqttException {
+        //当enable为false时，不开启mqtt服务
+        if (!config.isEnabled()) {
+            return;
+        }
+
         MqttConnectionOptions connOpts = new MqttConnectionOptions();
         connOpts.setCleanStart(config.getClient().isCleanStart());
         connOpts.setSessionExpiryInterval(config.getClient().getSessionExpiryInterval());
         connOpts.setAutomaticReconnect(config.getClient().isAutomaticReconnect());
 
         // 设置认证信息（如果有）
-        if (!config.getCredentials().getUsername().isEmpty()) {
+        if (config.getCredentials() != null && config.getCredentials().getUsername() != null) {
             connOpts.setUserName(config.getCredentials().getUsername());
             connOpts.setPassword(config.getCredentials().getPassword().getBytes());
         }
 
         log.info("Connecting to: {}", config.getBroker().getUrl());
         client.connect(connOpts);
+
+        // 订阅配置的 topic
+        if (config.getTopics() != null && config.getTopics().getSubscribe() != null) {
+            for (MqttConfig.Topic topic : config.getTopics().getSubscribe()) {
+                client.subscribe(topic.getTopic(), topic.getQos());
+                log.info("Subscribed to topic: {}", topic.getTopic());
+            }
+        }
     }
 
     @PreDestroy
     public void disconnect() throws MqttException {
+        if (!config.isEnabled()) {
+            return;
+        }
+
         if (client.isConnected()) {
             client.disconnect();
             log.info("Disconnected");

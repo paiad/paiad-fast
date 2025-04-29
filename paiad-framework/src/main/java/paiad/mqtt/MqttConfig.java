@@ -10,6 +10,7 @@ import java.util.List;
 @Component
 @ConfigurationProperties(prefix = "mqtt")
 public class MqttConfig {
+    private boolean enabled; // 新增字段，用于启用/禁用 MQTT
     private Broker broker;
     private Client client;
     private Credentials credentials;

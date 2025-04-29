@@ -24,9 +24,16 @@ public class MqttSubscriber {
 
     @PostConstruct
     public void subscribe() throws MqttException {
-        for (MqttConfig.Topic topic : config.getTopics().getSubscribe()) {
-            client.subscribe(topic.getTopic(), topic.getQos());
-            log.info("订阅的主题(topic): " + topic.getTopic());
+        if (!config.isEnabled()) {
+            return;
+        }
+
+        if (config.getTopics() != null && config.getTopics().getSubscribe() != null) {
+            for (MqttConfig.Topic topic : config.getTopics().getSubscribe()) {
+                client.subscribe(topic.getTopic(), topic.getQos());
+                log.info("订阅的主题(topic): {}", topic.getTopic());
+            }
         }
     }
+
 }

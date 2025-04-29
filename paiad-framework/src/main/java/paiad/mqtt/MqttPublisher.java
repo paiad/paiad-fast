@@ -23,12 +23,19 @@ public class MqttPublisher {
 
     @PostConstruct
     public void publish() throws MqttException {
-        for (MqttConfig.Topic topic : config.getTopics().getPublish()) {
-            String messageContent = "Message to " + topic.getTopic() + " at " + System.currentTimeMillis();
-            MqttMessage message = new MqttMessage(messageContent.getBytes());
-            message.setQos(topic.getQos());
-            client.publish(topic.getTopic(), message);
-            System.out.println("发布消息:" + messageContent + " 到主题(topic): " + topic.getTopic());
+        if (!config.isEnabled()) {
+            return;
+        }
+
+        if (config.getTopics() != null && config.getTopics().getPublish() != null) {
+            for (MqttConfig.Topic topic : config.getTopics().getPublish()) {
+                String messageContent = "Message to " + topic.getTopic() + " at " + System.currentTimeMillis();
+                MqttMessage message = new MqttMessage(messageContent.getBytes());
+                message.setQos(topic.getQos());
+                client.publish(topic.getTopic(), message);
+                System.out.println("发布消息:" + messageContent + " 到主题(topic): " + topic.getTopic());
+            }
         }
     }
+
 }
