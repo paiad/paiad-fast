@@ -16,8 +16,9 @@ public class SaTokenConfigure implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SaInterceptor(handler -> {
             SaRouter
-                    .match("/**") // 拦截所有路径
-                    .notMatch("/user/login") // 排除登录接口
+                    .match("/**")
+                    .notMatch("/user/login")
+                    .notMatch("/user/register")
                     .notMatch("/doc.html") // Knife4j 文档页面
                     .notMatch("/webjars/**") // Knife4j 静态资源
                     .notMatch("/swagger-resources/**") // Swagger 资源
