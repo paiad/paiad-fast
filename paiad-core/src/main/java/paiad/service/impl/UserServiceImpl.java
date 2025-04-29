@@ -66,6 +66,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         // 执行登录
         StpUtil.login(user.getId());
         SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
+
         //登录成功后，将用户的信息放入会话中，方便全局调用
         StpUtil.getSession().set("userInfo", user);
 
@@ -80,7 +81,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * 判断当前用户是否登录
      * */
     public SaResult isLogin(){
-        return SaResult.data("当前会话是否登录：" + StpUtil.isLogin());
+        return SaResult.data("Is login?:" + StpUtil.isLogin());
     }
 
 
