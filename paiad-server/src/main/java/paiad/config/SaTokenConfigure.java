@@ -15,19 +15,15 @@ public class SaTokenConfigure implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SaInterceptor(handler -> {
-            SaRouter
-                    .match("/**")
+            SaRouter.match("/**")
                     .notMatch("/user/login")
                     .notMatch("/user/register")
-                    .notMatch("/doc.html") // Knife4j 文档页面
-                    .notMatch("/webjars/**") // Knife4j 静态资源
-                    .notMatch("/swagger-resources/**") // Swagger 资源
-                    .notMatch("/v3/api-docs/**") // OpenAPI 文档接口
-                    .check(r -> StpUtil.checkLogin()); // 校验是否登录
+                    .notMatch("/doc.html")
+                    .notMatch("/webjars/**")
+                    .notMatch("/swagger-resources/**")
+                    .notMatch("/v3/api-docs/**")
+                    .check(r -> StpUtil.checkLogin());
 
-            // 可选：权限校验示例
-//            SaRouter.match("/user/**", r -> StpUtil.checkPermission("user"));
-//            SaRouter.match("/admin/**", r -> StpUtil.checkRoleOr("admin", "super-admin"));
         })).addPathPatterns("/**");
     }
 }

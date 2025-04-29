@@ -1,6 +1,7 @@
 package paiad.controller;
 
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -37,6 +38,14 @@ public class UserController {
     @Operation(summary = "是否登录")
     public SaResult isLogin() {
         return userService.isLogin();
+    }
+
+    @GetMapping("info")
+    @Operation(summary = "用户信息")
+    public SaResult getUserInfo() {
+        System.out.println(StpUtil.getPermissionList());
+        Object userInfo = StpUtil.getSession().get("userInfo");
+        return userService.getUserInfo(userInfo);
     }
 
 }

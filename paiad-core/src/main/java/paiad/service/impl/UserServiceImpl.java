@@ -9,11 +9,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import paiad.mapper.UserMapper;
 import paiad.pojo.dto.UserDTO;
 import paiad.pojo.po.User;
+import paiad.pojo.vo.UserVO;
 import paiad.service.IUserService;
 
 import java.time.LocalDateTime;
@@ -63,6 +65,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         // 执行登录
         StpUtil.login(user.getId());
         SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
+        //登录成功后，将用户的信息放入会话中，方便全局调用
+        StpUtil.getSession().set("userInfo", user);
 
         // 更新登录信息
         updateLoginInfo(user.getId(), ipAddress, LocalDateTime.now());
@@ -78,7 +82,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return SaResult.data("当前会话是否登录：" + StpUtil.isLogin());
     }
 
-    /**************************************private method*************************************/
+
+    /**
+     * 获取当前用户信息
+     * */
+    public SaResult getUserInfo(Object userInfo){
+        User user = (User) userInfo;
+        UserVO userVO = new UserVO();
+        BeanUtils.copyProperties(user,userVO);
+        return SaResult.data(userVO);
+    }
+
+
+
+
+
+
+
+
+    /*********************************************private method*******************************************************/
     /**
      * 根据用户名查询用户
      */
