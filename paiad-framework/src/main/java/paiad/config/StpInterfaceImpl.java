@@ -5,7 +5,6 @@ import cn.dev33.satoken.stp.StpUtil;
 import org.springframework.stereotype.Component;
 import paiad.pojo.po.User;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
