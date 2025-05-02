@@ -31,6 +31,7 @@ public class MqttConfig {
     public static class Client {
         private String clientId;
         private boolean cleanStart;
+        private int keepAliveInterval;
         private long sessionExpiryInterval;
         private boolean automaticReconnect;
     }

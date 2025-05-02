@@ -44,7 +44,13 @@ public class MqttPublisher {
         }
     }
 
-    public void publishMessage(String topic, String messageContent, int qos) throws MqttException {
+    /**
+     * 向特定主题(topic)发布消息(qos = qos)
+     * qos0: 消息至多一次到达
+     * qos1: 消息至少一次到达
+     * qos2: 消息恰好一次到达
+     * */
+    public void publish(String topic, String msg, int qos){
         if (client == null) {
             log.info("MQTT 客户端未初始化，无法发布消息到主题：{}", topic);
             return;
@@ -55,7 +61,7 @@ public class MqttPublisher {
             return;
         }
 
-        if (messageContent == null) {
+        if (msg == null) {
             log.warn("消息内容不能为空，跳过主题 {} 的发布操作。", topic);
             return;
         }
@@ -65,9 +71,13 @@ public class MqttPublisher {
             qos = 1;
         }
 
-        MqttMessage message = new MqttMessage(messageContent.getBytes(StandardCharsets.UTF_8));
+        MqttMessage message = new MqttMessage(msg.getBytes(StandardCharsets.UTF_8));
         message.setQos(qos);
-        client.publish(topic, message);
-        log.info("发布自定义消息：{} 到主题：{}，QoS：{}", messageContent, topic, qos);
+        try {
+            client.publish(topic, message);
+            log.info("发布自定义消息：{} 到主题：{}，QoS：{}", msg, topic, qos);
+        } catch (MqttException e) {
+            log.error("MQTT 消息发布失败，主题：{}，错误：{}", topic, e.getMessage());
+        }
     }
 }

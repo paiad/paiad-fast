@@ -37,7 +37,7 @@ public class MqttSubscriber {
         }
     }
 
-    public void subscribeToTopic(String topic, int qos) throws MqttException {
+    public void subscribe(String topic, int qos){
         if (client == null) {
             log.info("MQTT 客户端未初始化，无法订阅主题：{}", topic);
             return;
@@ -53,7 +53,11 @@ public class MqttSubscriber {
             qos = 1;
         }
 
-        client.subscribe(topic, qos);
-        log.info("动态订阅主题：{}，QoS：{}", topic, qos);
+        try {
+            client.subscribe(topic, qos);
+            log.info("动态订阅主题：{}，QoS：{}", topic, qos);
+        }catch (MqttException e){
+            log.error("MQTT 主题订阅失败，主题：{}，错误：{}", topic, e.getMessage());
+        }
     }
 }
