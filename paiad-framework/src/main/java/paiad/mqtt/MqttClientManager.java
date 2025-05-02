@@ -60,13 +60,11 @@ public class MqttClientManager {
 
     @PostConstruct
     public void connect() throws MqttException {
-        // 集中检查 isEnabled()
         if (!config.isEnabled()) {
             log.info("MQTT 功能已禁用，跳过初始化。");
             return;
         }
 
-        // 初始化 MQTT 客户端
         try {
             client = new MqttClient(
                     config.getBroker().getUrl(),
@@ -79,8 +77,8 @@ public class MqttClientManager {
             connOpts.setCleanStart(config.getClient().isCleanStart());
             connOpts.setSessionExpiryInterval(config.getClient().getSessionExpiryInterval());
             connOpts.setAutomaticReconnect(config.getClient().isAutomaticReconnect());
+            connOpts.setKeepAliveInterval(config.getClient().getKeepAliveInterval());
 
-            // 设置认证信息（如果有）
             if (config.getCredentials() != null && config.getCredentials().getUsername() != null) {
                 connOpts.setUserName(config.getCredentials().getUsername());
                 connOpts.setPassword(config.getCredentials().getPassword().getBytes());
@@ -90,13 +88,12 @@ public class MqttClientManager {
             client.connect(connOpts);
         } catch (MqttException e) {
             log.error("MQTT 客户端初始化失败：{}", e.getMessage(), e);
-            throw e; // 抛出异常，交给 Spring 容器处理
+            throw e;
         }
     }
 
     @PreDestroy
     public void disconnect() throws MqttException {
-        // 如果客户端未初始化，直接返回
         if (client == null) {
             return;
         }

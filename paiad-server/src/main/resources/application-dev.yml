@@ -37,6 +37,7 @@ mqtt:
   client:
     client-id: paiad-mqttv5-client
     clean-start: true
+    keep-alive-interval: 60
     session-expiry-interval: 60
     automatic-reconnect: true
   credentials:
