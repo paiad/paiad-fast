@@ -44,7 +44,7 @@
    spring:
      datasource:
        url: jdbc:mysql://localhost:3306/your_db
-       username: root
+       username: your_username
        password: your_password
    ```
 
