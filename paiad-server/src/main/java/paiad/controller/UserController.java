@@ -3,6 +3,7 @@ package paiad.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
+import cn.hutool.core.date.DateUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
@@ -63,6 +64,14 @@ public class UserController {
     @Operation(summary = "用户登出")
     public SaResult logout() {
         return userService.logout();
+    }
+
+    @GetMapping("/test")
+    @Operation(summary = "用户测试(No Token)")
+    public SaResult test() {
+        String formattedTime = DateUtil.now(); // 默认格式：yyyy-MM-dd HH:mm:ss
+        System.out.println("时间：" +  formattedTime +"\n请求中......");
+        return SaResult.ok();
     }
 
 }
