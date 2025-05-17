@@ -24,5 +24,15 @@ export default defineConfig({
     alias: {
       '@': path.resolve('./src')
     }
+  },
+  //配置跨域
+  server: {
+    proxy: {
+      '/dev-api': {
+        target: 'http://localhost:9090',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/dev-api/, '/api'),
+      }
+    }
   }
 })

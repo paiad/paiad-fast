@@ -25,16 +25,16 @@ app.use(GlobalComponents)
 import './styles/index.scss'
 
 //测试接口
-import axios from 'axios'
-axios({
-  url: 'http://localhost:9090/api/user/login',
-  method:'POST',
-  data:{
-    username: 'admin',
-    password: '123456'
-  }
-
-})
+// import axios from 'axios'
+// axios({
+//   url: 'http://localhost:9090/api/user/login',
+//   method:'POST',
+//   data:{
+//     username: 'admin',
+//     password: '123456'
+//   }
+//
+// })
 
 
 app.mount('#app')

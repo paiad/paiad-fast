@@ -1,19 +1,31 @@
 <script setup lang="ts">
-import {Plus} from '@element-plus/icons-vue'
+import { onMounted } from 'vue'
+import request from '@/utils/request.ts'
+
+interface LoginResponse {
+  code: number
+  data: any
+  message: string
+}
+
+onMounted(() => {
+  request({
+    url: '/user/login',
+    method: 'POST',
+    data: {
+      username: 'admin',
+      password: '123456'
+    }
+  }).then((res: LoginResponse) => {
+    console.log(res)
+  })
+})
 </script>
 
 <template>
-  <div>
-    <el-button type="primary" size="default" @click="" :icon="Plus"></el-button>
-    <SvgIcon name="home" color="red" width="50px" height="50px"></SvgIcon>
-    <h1>123</h1>
-  </div>
+
 </template>
 
 <style scoped lang="scss">
-div {
-  h1 {
-    color: $color;
-  }
-}
+
 </style>
