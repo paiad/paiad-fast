@@ -10,7 +10,9 @@ export interface ResponseData {
 }
 
 export interface LoginResponseData extends ResponseData{
-  data?: string
+  data: {
+    token: string
+  }
 }
 
 export interface userInfoResponseData extends ResponseData {

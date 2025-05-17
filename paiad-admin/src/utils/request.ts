@@ -18,7 +18,7 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   (response) => {
     if (response.status === 200) {
-      console.log(response.data)
+      // console.log(response.data)
       return Promise.resolve(response.data)
     } else {
       return Promise.reject(response.data)

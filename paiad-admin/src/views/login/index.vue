@@ -20,14 +20,14 @@
           </el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="loginForm.password" placeholder="请输入密码" show-password="false">
+          <el-input v-model="loginForm.password" placeholder="请输入密码" show-password="false" ROU>
             <template #prefix>
               <el-icon><Lock /></el-icon>
             </template>
           </el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="login-button" @click="login">登 录</el-button>
+          <el-button type="primary" class="login-button" @click="login" :loading="loading">登 录</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -36,11 +36,16 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-import { ElMessage } from 'element-plus'
 import ParticlesBg from '../../components/Inspira/ParticlesBg.vue'
-// Import icons
 import { User, Lock } from '@element-plus/icons-vue'
+import useUserStore  from '../../store/modules/user.ts'
+import { useRouter} from 'vue-router'
+import {ElNotification}  from 'element-plus'
 
+let useStore = useUserStore();
+let $router = useRouter()
+//控制登录按钮加载，一开始不转
+let loading = ref(false)
 const formRef = ref()
 const loginForm = reactive({
   username: 'admin',
@@ -53,13 +58,22 @@ const rules = {
 }
 
 //登录
-const login = () => {
-  formRef.value?.validate((valid: boolean) => {
-    if (valid) {
-      ElMessage.success('登录成功！')
-      // TODO: 执行登录逻辑
-    }
-  })
+const login = async () => {
+  loading.value = true
+  try {
+    await useStore.userLogin(loginForm);
+    $router.push('/')
+    ElNotification({
+      type: 'success',
+      message: '登录成功',
+    })
+  }catch (error){
+    loading.value = false
+    ElNotification({
+      type: 'error',
+      message: (error as Error).message,
+    })
+  }
 }
 </script>
 

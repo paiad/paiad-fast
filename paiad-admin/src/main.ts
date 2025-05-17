@@ -10,6 +10,8 @@ import 'virtual:svg-icons-register'
 //引入全局样式
 import './styles/index.scss'
 
+//引入pinia
+import pinia from './store'
 
 const app = createApp(App)
 
@@ -41,4 +43,6 @@ app.use(GlobalComponents)
 
 //注册路由
 app.use(router)
+//安装仓库
+app.use(pinia)
 app.mount('#app')

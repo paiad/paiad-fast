@@ -19,7 +19,9 @@ import paiad.pojo.vo.UserVO;
 import paiad.service.IUserService;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -60,12 +62,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         // 校验密码
         if (!checkPassword(userDTO.getPassword(), user.getPassword())) {
-            return SaResult.error("密码错误");
+            return SaResult.error("账号或密码错误");
         }
 
         // 执行登录
         StpUtil.login(user.getId());
-        SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
+        String tokenValue = StpUtil.getTokenValue();
+        Map<String,String> tokenMap = new HashMap<>();
+        tokenMap.put("token",tokenValue);
 
         //登录成功后，将用户的信息放入会话中，方便全局调用
         StpUtil.getSession().set("userInfo", user);
@@ -74,8 +78,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         updateLoginInfo(user.getId(), ipAddress, LocalDateTime.now());
 
         // 返回 Token 信息
-//        return SaResult.data(tokenInfo);
-        return SaResult.ok("登录成功");
+        return SaResult.data(tokenMap);
     }
 
     /**
