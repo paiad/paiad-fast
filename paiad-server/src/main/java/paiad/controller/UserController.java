@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import paiad.pojo.dto.UserDTO;
 import paiad.service.IUserService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
-@RequestMapping("/user/")
+@RequestMapping("/auth/")
 @Tag(name = "User接口文档")
 public class UserController {
     @Resource
@@ -31,8 +34,14 @@ public class UserController {
 
     @PostMapping("login")
     @Operation(summary = "用户登录")
-    public SaResult login(@RequestBody @Valid UserDTO userDTO) {
-        return userService.login(userDTO, request.getRemoteAddr());
+    public Map login(@RequestBody @Valid UserDTO userDTO) {
+        Map map1 = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
+        map.put("token","123456");
+        map.put("refreshToken","123456");
+
+        map1.put("data",map);
+        return map1;
     }
 
     @GetMapping("isLogin")
@@ -41,7 +50,7 @@ public class UserController {
         return userService.isLogin();
     }
 
-    @GetMapping("info")
+    @GetMapping("getUserInfo")
     @Operation(summary = "用户信息")
     public SaResult getUserInfo() {
         Object userInfo = StpUtil.getSession().get("userInfo");
