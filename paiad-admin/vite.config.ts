@@ -31,6 +31,7 @@ export default defineConfig({
       '/dev-api': {
         target: 'http://localhost:9090',
         changeOrigin: true,
+        // http://localhost:5173/dev-api/user/login => http://localhost:9090/api/user/login
         rewrite: (path) => path.replace(/^\/dev-api/, '/api'),
       }
     }

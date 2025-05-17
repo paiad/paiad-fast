@@ -9,6 +9,7 @@ const request = axios.create({
 //请求
 request.interceptors.request.use(
   (config) => {
+    config.headers.user = "admin"
     return config
   },
 )
@@ -17,6 +18,7 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   (response) => {
     if (response.status === 200) {
+      console.log(response.data)
       return Promise.resolve(response.data)
     } else {
       return Promise.reject(response.data)

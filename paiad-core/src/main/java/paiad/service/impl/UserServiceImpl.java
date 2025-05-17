@@ -74,7 +74,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         updateLoginInfo(user.getId(), ipAddress, LocalDateTime.now());
 
         // 返回 Token 信息
-        return SaResult.data(tokenInfo);
+//        return SaResult.data(tokenInfo);
+        return SaResult.ok("登录成功");
     }
 
     /**
