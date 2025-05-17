@@ -1,10 +1,10 @@
 <script setup lang="ts">
-
+import {Plus} from '@element-plus/icons-vue'
 </script>
 
 <template>
   <div>
-    <h1>paiad-admin</h1>
+    <el-button type="primary" size="default" @click="" :icon="Plus"></el-button>
   </div>
 </template>
 
