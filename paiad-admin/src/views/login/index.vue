@@ -10,7 +10,10 @@
     />
 
     <div class="login-panel">
-      <h2 class="title">欢迎登录</h2>
+      <div style="display: flex; align-items: center;justify-content: center; height: 45px;margin-bottom: 15px">
+        <img src="https://paiad.online/logo.svg" alt="图标" style="width: 32px; height: 32px; margin-right: 10px;">
+        <span style="font-size: 24px; font-weight: bold; line-height: 32px;">欢迎登录</span>
+      </div>
       <el-form :model="loginForm" :rules="rules" ref="formRef" label-position="top" class="form">
         <el-form-item label="用户名" prop="username">
           <el-input v-model="loginForm.username" placeholder="请输入用户名">
@@ -132,14 +135,14 @@ const login = async () => {
 
 .login-button {
   width: 100%;
-  background-color: #41b291;
-  border-color: #41b291;
+  background-color: #51b8fd;
+  border-color: #3f9fd0;
   font-weight: bold;
   transition: background-color 0.3s;
 }
 
 .login-button:hover {
-  background-color: #379f80;
-  border-color: #379f80;
+  background-color: #47b7fa;
+  border-color: #3f9fd0;
 }
 </style>
