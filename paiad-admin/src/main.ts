@@ -12,5 +12,14 @@ app.use(ElementPlus, {
   locale: zhCn,
 })
 
-console.log(import.meta.env)
+//svg配置
+import 'virtual:svg-icons-register'
+// import SvgIcon from './components/SvgIcon/index.vue'
+// app.component('SvgIcon', SvgIcon)
+
+//引入自定义插件对象(全局组件)
+import GlobalComponents from './components'
+app.use(GlobalComponents)
+
+import './styles/index.scss'
 app.mount('#app')
