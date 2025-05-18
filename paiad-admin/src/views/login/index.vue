@@ -14,18 +14,22 @@
         <img src="https://paiad.online/logo.svg" alt="图标" style="width: 32px; height: 32px; margin-right: 10px;">
         <span style="font-size: 24px; font-weight: bold; line-height: 32px;">欢迎登录</span>
       </div>
-      <el-form :model="loginForm" :rules="rules" ref="formRef" label-position="top" class="form">
+      <el-form :model="loginForm" :rules="rules" ref="loginFormRef" label-position="top" class="form">
         <el-form-item label="用户名" prop="username">
           <el-input v-model="loginForm.username" placeholder="请输入用户名">
             <template #prefix>
-              <el-icon><User /></el-icon>
+              <el-icon>
+                <User />
+              </el-icon>
             </template>
           </el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="loginForm.password" placeholder="请输入密码" show-password="false" ROU>
+          <el-input v-model="loginForm.password" placeholder="请输入密码" show-password>
             <template #prefix>
-              <el-icon><Lock /></el-icon>
+              <el-icon>
+                <Lock />
+              </el-icon>
             </template>
           </el-input>
         </el-form-item>
@@ -41,42 +45,52 @@
 import { ref, reactive } from 'vue'
 import ParticlesBg from '../../components/Inspira/ParticlesBg.vue'
 import { User, Lock } from '@element-plus/icons-vue'
-import useUserStore  from '../../store/modules/user.ts'
-import { useRouter} from 'vue-router'
-import {ElNotification}  from 'element-plus'
+import useUserStore from '../../store/modules/user.ts'
+import { useRouter } from 'vue-router'
+import { ElNotification } from 'element-plus'
+import { getTime } from '../../utils/time.ts'
 
-let useStore = useUserStore();
+let useStore = useUserStore()
 let $router = useRouter()
 //控制登录按钮加载，一开始不转
 let loading = ref(false)
-const formRef = ref()
+const loginFormRef = ref()
 const loginForm = reactive({
   username: 'admin',
-  password: '123456',
+  password: '123456'
 })
-
-const rules = {
-  username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-  password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
-}
 
 //登录
 const login = async () => {
+  //确保校验后发送请求
+  await loginFormRef.value.validate()
+  //登录按钮转圈
   loading.value = true
   try {
-    await useStore.userLogin(loginForm);
+    await useStore.userLogin(loginForm)
     $router.push('/')
     ElNotification({
       type: 'success',
-      message: '登录成功',
+      title: `Hi, ${getTime()}好`,
+      message: '登录成功'
     })
-  }catch (error){
+  } catch (error) {
     loading.value = false
     ElNotification({
       type: 'error',
-      message: (error as Error).message,
+      message: (error as Error).message
     })
   }
+}
+
+const rules = {
+  username: [
+    { required: true, message: '请输入账号', trigger: 'blur' },
+    { min: 5, message: '账号长度至少为5位', trigger: 'blur' },
+  ],
+  password: [
+    { required: true, min: 6, message: '密码长度至少为6位', trigger: 'change' },
+  ]
 }
 </script>
 
@@ -112,6 +126,7 @@ const login = async () => {
   box-shadow: 0 8px 30px rgba(0, 128, 192, 0.1);
   backdrop-filter: blur(6px);
   text-align: center;
+  margin-top: -50px;
 }
 
 .title {
