@@ -2,6 +2,6 @@
 export default {
   title: '派',
   logo: '/logo.svg',
-  //是否隐藏图标
-  logoHidden: true,
+  //是否展示图标
+  isLogoShow: true,
 }
