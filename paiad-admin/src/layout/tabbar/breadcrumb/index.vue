@@ -10,7 +10,7 @@ let $route = useRoute()
 </script>
 <template>
   <el-icon
-    style="margin-right: 10px; cursor: pointer"
+    style="margin-right: 15px; cursor: pointer"
     size="20px"
     @click="changeIcon"
   >

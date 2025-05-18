@@ -38,9 +38,9 @@ let LayOutSettingStore = useLayOutSettingStore()
       <TabBar style="width: 100%" />
       <el-main
         :style="{
-          left: !LayOutSettingStore.isCollapse ? '200px' : '56px',
+          left: !LayOutSettingStore.isCollapse ? '200px' : '64px',
           width: LayOutSettingStore.isCollapse
-            ? 'calc(100% - 56px)'
+            ? 'calc(100% - 64px)'
             : 'calc(100% - 200px)',
         }"
       >
@@ -74,13 +74,14 @@ let LayOutSettingStore = useLayOutSettingStore()
   transition: all 0.3s;
 }
 .el-header {
+  padding-left: 15px;
   margin-left: 1.2px;
   background-color: #fff !important;
   box-shadow: rgba(143, 142, 142, 0.7) 0px 1px 1px 0px;
   z-index: 999;
 }
 .isCollapse {
-  width: 56px;
+  width: 64px;
 }
 
 @media screen and (max-width: 768px) {
