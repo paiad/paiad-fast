@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import { constantRoute } from './router.ts'
+import { constantRoute } from './routes.ts'
 
 const router = createRouter({
   //路由模式(Hash)

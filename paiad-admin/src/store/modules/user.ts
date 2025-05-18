@@ -3,7 +3,7 @@ import type { LoginFormData, LoginResponseData } from '../../api/user/type.ts'
 import { reqLogin, reqUserInfo } from '../../api/user'
 import type { UserState } from './types/type.ts'
 import { GET_TOKEN, REMOVE_TOKEN, SET_TOKEN } from '../../utils/token.ts'
-import { constantRoute } from '@/router/router.ts'
+import { constantRoute } from '@/router/routes.ts'
 
 const useUserStore = defineStore('User', {
   // 小仓库存储数据的地方
@@ -35,7 +35,7 @@ const useUserStore = defineStore('User', {
     //获取用户信息
     async userInfo() {
       let res = await reqUserInfo()
-      console.log(res)
+      // console.log(res)
       if (res.code === 200) {
         this.userid = res.data.id as number
         this.username = res.data.username as string

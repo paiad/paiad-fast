@@ -48,5 +48,8 @@ app.use(pinia)
 
 // iconify 图标库
 import { Icon } from '@iconify/vue'
+
+//路由鉴权守卫
+import './permission.ts'
 app.component('Icon', Icon)
 app.mount('#app')
