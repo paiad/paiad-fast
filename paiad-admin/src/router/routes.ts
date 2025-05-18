@@ -161,15 +161,51 @@ export const constantRoute = [
     ],
   },
 
+  //blog
+  {
+    path: '/',
+    component: () => import('@/layout/index.vue'),
+    name: 'Blog',
+    meta: {
+      title: '',
+      isShow: true,
+      icon: 'mdi:blog'
+    },
+    children: [
+      {
+        path: '/paiad',
+        component: () => import('@/views/blog/index.vue'),
+        name: 'BlogList',
+        meta: {
+          title: '博客院',
+          isShow: true,
+          icon: 'tdesign:broccoli'
+        }
+      }
+    ]
+  },
+
   //test
   {
-    path: '/test',
+    path: '/',
     component: () => import('@/layout/index.vue'),
-    name: '测试',
+    name: 'Test',
     meta: {
-      title: '测试',
+      title: '',
       isShow: true,
-      icon: 'hugeicons:test-tube-01'
+      icon: ''
     },
-  }
+    children: [
+      {
+        path: '/test',
+        component: () => import('@/views/test/index.vue'),
+        name: '测试',
+        meta: {
+          title: '测试',
+          isShow: true,
+          icon: 'hugeicons:test-tube-01'
+        },
+      }
+    ]
+  },
 ]
