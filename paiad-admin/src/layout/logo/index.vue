@@ -3,38 +3,19 @@ import setting from '@/setting'
 </script>
 <template>
   <div class="logo" v-if="setting.logoHidden">
-    <img :src="setting.logo" alt="" />
-    <span class="title">{{ setting.title }}</span>
+    <img :src="setting.logo" alt="" class="image"/>
+<!--    <span class="title">{{ setting.title }}</span>-->
   </div>
 </template>
 <style lang="scss" scoped>
 .logo {
-  width: 90%;
   display: flex;
-  align-items: center;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
   height: $base-menu-logo-height;
-  color: #3f9fd0;
-  font-weight: 700;
-  font-size: $base-logo-title-fontSize;
-  flex-wrap: nowrap;
-  overflow: hidden;
-  padding-left: 17px;
-  img {
-    display: inline-block;
+  .image{
     width: 30px;
     height: 30px;
-    border-radius: 10px;
-  }
-  .title {
-    display: inline-block;
-    height: 28px;
-    margin: 2px 0 0 18px;
-    overflow: hidden;
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 32px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 }
 </style>

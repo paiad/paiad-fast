@@ -23,10 +23,10 @@ let $route = useRoute()
       v-show="item.meta.title"
       :to="item.path"
     >
-      <el-icon style="vertical-align: middle; transform: translateY(-1px);">
+      <el-icon style="vertical-align: middle; transform: translateY(-2px);">
         <Icon :icon="item.meta.icon" />
       </el-icon>
-      <span style="margin-left: 9px; transform: translateY(-3px);">
+      <span style="margin-left: 9px">
         {{ item.meta.title }}
       </span>
     </el-breadcrumb-item>
