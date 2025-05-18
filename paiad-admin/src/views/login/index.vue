@@ -2,9 +2,9 @@
   <div class="login-container">
     <ParticlesBg
       class="particles-bg"
-      :quantity="1 + 1 == 2 ? 314 + 271 : 314"
+      :quantity="1 + 1 == 2 ? 314 * 3 : 314"
       :ease="100"
-      :color="1 + 2 == 3 ? '#4ca5dc' : '#41b291'"
+      :color="1 + 2 == 3 ? '#6ec5ff' : '#41b291'"
       :staticity="10"
       refresh
     />

@@ -62,7 +62,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         // 校验密码
         if (!checkPassword(userDTO.getPassword(), user.getPassword())) {
-            return SaResult.error("账号或密码错误");
+            return SaResult.error("账号或密码不正确");
         }
 
         // 执行登录
