@@ -10,11 +10,13 @@ import Logo from './logo/index.vue'
       <!-- 展示菜单 -->
       <el-scrollbar class="scrollbar">
         <!-- 菜单组件 -->
-        <el-menu background-color="#3f9fd0" text-color="#ffffff">
+        <el-menu background-color="#ffffff" text-color="#3f9fd0">
           <el-menu-item index="1">首页</el-menu-item>
           <el-menu-item index="2">数据大屏</el-menu-item>
           <el-sub-menu index="3">
-            <template #title>item four</template>
+            <template #title>
+              权限管理
+            </template>
             <el-menu-item index="2-1">用户管理</el-menu-item>
             <el-menu-item index="2-2">角色管理</el-menu-item>
             <el-menu-item index="2-3">菜单管理</el-menu-item>
