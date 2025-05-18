@@ -94,7 +94,7 @@ const setColor = () => {
 
   <img :src="userStore.avatar" alt="" />
   <el-dropdown>
-    <span class="el-dropdown-link" style="cursor: pointer">
+    <span class="el-dropdown-link" style="cursor: pointer;font-weight: bold">
       {{ userStore.nickname }}
       <el-icon class="el-icon--right">
         <arrow-down />

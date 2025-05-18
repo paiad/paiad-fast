@@ -74,7 +74,7 @@ const login = async () => {
     $router.push({path: redirect || '/'})
     ElNotification({
       type: 'success',
-      title: `Hi, ${getTime()}好`,
+      title: `Hi, ${loginForm.username}！ ${getTime()}好`,
       message: '登录成功'
     })
   } catch (error) {
