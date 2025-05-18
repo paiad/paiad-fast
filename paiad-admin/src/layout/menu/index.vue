@@ -12,10 +12,10 @@ export default {
     <!-- 没有子路由 -->
     <template v-if="!item.children">
       <el-menu-item :index="item.path" v-if="item.meta.isShow">
-        <el-icon>
-          <component :is="item.meta.icon"></component>
-        </el-icon>
         <template #title>
+          <el-icon>
+            <Icon :icon="item.meta.icon" />
+          </el-icon>
           <span>{{ item.meta.title }}</span>
         </template>
       </el-menu-item>
@@ -24,7 +24,7 @@ export default {
     <template v-if="item.children && item.children.length === 1">
       <el-menu-item :index="item.children[0].path" v-if="item.children[0].meta.isShow">
         <el-icon>
-          <component :is="item.children[0].meta.icon"></component>
+          <Icon :icon="item.children[0].meta.icon" />
         </el-icon>
         <template #title>
           <span>{{ item.children[0].meta.title }}</span>
@@ -35,7 +35,7 @@ export default {
     <el-sub-menu :index="item.path"  v-if="item.children && item.children.length > 1">
       <template #title>
         <el-icon>
-          <component :is="item.meta.icon"></component>
+          <Icon :icon="item.meta.icon" />
         </el-icon>
         <span>{{ item.meta.title }}</span>
       </template>

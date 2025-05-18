@@ -45,4 +45,8 @@ app.use(GlobalComponents)
 app.use(router)
 //安装仓库
 app.use(pinia)
+
+// iconify 图标库
+import { Icon } from '@iconify/vue'
+app.component('Icon', Icon)
 app.mount('#app')
