@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { ArrowRight, Fold, Expand } from '@element-plus/icons-vue'
 import useLayOutSettingStore from '@/store/modules/setting'
+import { useRoute } from 'vue-router'
 let LayOutSettingStore = useLayOutSettingStore()
 const changeIcon = () => {
   LayOutSettingStore.isCollapse = !LayOutSettingStore.isCollapse
 }
+let $route = useRoute()
 </script>
 <template>
   <el-icon
@@ -21,10 +23,10 @@ const changeIcon = () => {
       v-show="item.meta.title"
       :to="item.path"
     >
-      <el-icon style="vertical-align: middle">
-        <component :is="item.meta.icon"></component>
+      <el-icon style="vertical-align: middle; transform: translateY(-1px);">
+        <Icon :icon="item.meta.icon" />
       </el-icon>
-      <span style="margin: 0 5px; vertical-align: middle">
+      <span style="margin-left: 9px; transform: translateY(-3px);">
         {{ item.meta.title }}
       </span>
     </el-breadcrumb-item>

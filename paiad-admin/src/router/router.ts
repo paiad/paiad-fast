@@ -16,9 +16,9 @@ export const constantRoute = [
     component: () => import('@/layout/index.vue'),
     name: 'layout',
     meta: {
-      title: '布局',
+      title: '',
       isShow: true,
-      icon: 'mingcute:layout-line'
+      icon: 'iconoir:layout-right'
     },
     redirect: '/home',
     children: [
@@ -160,4 +160,16 @@ export const constantRoute = [
       },
     ],
   },
+
+  //test
+  {
+    path: '/test',
+    component: () => import('@/layout/index.vue'),
+    name: '测试',
+    meta: {
+      title: '测试',
+      isShow: true,
+      icon: 'hugeicons:test-tube-01'
+    },
+  }
 ]

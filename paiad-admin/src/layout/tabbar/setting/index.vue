@@ -6,7 +6,7 @@ import {
   FullScreen,
   ArrowDown,
 } from '@element-plus/icons-vue'
-// import useLayOutSettingStore from '@/store/modules/setting'
+import useLayOutSettingStore from '@/store/modules/setting'
 // let layoutSettingStore = useLayOutSettingStore()
 // import useUserStore from '@/store/modules/user'
 import { useRouter, useRoute } from 'vue-router'

@@ -13,7 +13,7 @@ import setting from '@/setting'
   display: flex;
   align-items: center;
   height: $base-menu-logo-height;
-  color: #090909;
+  color: #3f9fd0;
   font-weight: 700;
   font-size: $base-logo-title-fontSize;
   flex-wrap: nowrap;
@@ -21,13 +21,13 @@ import setting from '@/setting'
   padding-left: 17px;
   img {
     display: inline-block;
-    widows: 30px;
+    width: 30px;
     height: 30px;
     border-radius: 10px;
   }
   .title {
     display: inline-block;
-    height: 32px;
+    height: 28px;
     margin: 2px 0 0 18px;
     overflow: hidden;
     font-size: 18px;

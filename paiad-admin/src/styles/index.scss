@@ -1,1 +1,8 @@
 @use './reset.scss';
+/* 在全局样式文件中添加，如 index.css 或 main.scss */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* 阻止整个页面滚动 */
+  height: 100%;
+}
