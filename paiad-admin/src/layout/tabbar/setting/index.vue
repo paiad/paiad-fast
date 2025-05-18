@@ -30,7 +30,7 @@ const fullScreen = () => {
 }
 
 const logout = async () => {
-  // await userStore.userLogout()
+  await userStore.userLogout()
   $router.push({ path: '/login', query: { redirect: $route.path } })
 }
 

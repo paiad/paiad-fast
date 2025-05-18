@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import type { LoginFormData, LoginResponseData } from '../../api/user/type.ts'
 import { reqLogin, reqUserInfo } from '../../api/user'
 import type { UserState } from './types/type.ts'
-import { GET_TOKEN, SET_TOKEN } from '../../utils/token.ts'
+import { GET_TOKEN, REMOVE_TOKEN, SET_TOKEN } from '../../utils/token.ts'
 import { constantRoute } from '@/router/router.ts'
 
 const useUserStore = defineStore('User', {
@@ -14,7 +14,7 @@ const useUserStore = defineStore('User', {
       userid: -1,
       username: '',
       nickname: '',
-      avatar: '',
+      avatar: ''
     }
   },
   // 异步|逻辑的地方
@@ -46,7 +46,18 @@ const useUserStore = defineStore('User', {
         return Promise.reject(new Error(res.message))
       }
     },
+    //退出登录
+    async userLogout() {
+      this.token = ''
+      this.userid = -1
+      this.username = ''
+      this.nickname = ''
+      this.avatar = ''
+      //清楚：token
+      REMOVE_TOKEN();
+    }
   },
+
   getters: {}
 })
 

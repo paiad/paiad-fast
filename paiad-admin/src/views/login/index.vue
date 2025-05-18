@@ -46,7 +46,7 @@ import { ref, reactive } from 'vue'
 import ParticlesBg from '../../components/Inspira/ParticlesBg.vue'
 import { User, Lock } from '@element-plus/icons-vue'
 import useUserStore from '../../store/modules/user.ts'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { ElNotification } from 'element-plus'
 import { getTime } from '../../utils/time.ts'
 
@@ -60,6 +60,7 @@ const loginForm = reactive({
   password: '123456'
 })
 
+let $route = useRoute()
 //登录
 const login = async () => {
   //确保校验后发送请求
@@ -68,7 +69,9 @@ const login = async () => {
   loading.value = true
   try {
     await useStore.userLogin(loginForm)
-    $router.push('/')
+    //判断登录是否有query参数，如果有就参考这个query跳
+    let redirect:any = $route.query.redirect
+    $router.push({path: redirect || '/'})
     ElNotification({
       type: 'success',
       title: `Hi, ${getTime()}好`,
