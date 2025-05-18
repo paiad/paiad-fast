@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import Logo from './logo/index.vue'
+import Menu from './menu/index.vue'
+import useUserStore from '../store/modules/user.ts'
+
+let userStore = useUserStore()
+// let $route = useRoute()
 </script>
 
 <template>
@@ -11,16 +16,8 @@ import Logo from './logo/index.vue'
       <el-scrollbar class="scrollbar">
         <!-- 菜单组件 -->
         <el-menu background-color="#ffffff" text-color="#3f9fd0">
-          <el-menu-item index="1">首页</el-menu-item>
-          <el-menu-item index="2">数据大屏</el-menu-item>
-          <el-sub-menu index="3">
-            <template #title>
-              权限管理
-            </template>
-            <el-menu-item index="2-1">用户管理</el-menu-item>
-            <el-menu-item index="2-2">角色管理</el-menu-item>
-            <el-menu-item index="2-3">菜单管理</el-menu-item>
-          </el-sub-menu>
+          <!-- 动态路由菜单 -->
+          <Menu :menuList="userStore.menuRoutes" />
         </el-menu>
       </el-scrollbar>
     </div>
@@ -43,6 +40,9 @@ import Logo from './logo/index.vue'
       .scrollbar{
           width: 100%;
           height: calc(100vh - $base-menu-logo-height);
+          .el-menu{
+              border-right: none
+          }
       }
   }
   .layout-tabbar{

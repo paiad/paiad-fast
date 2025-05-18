@@ -6,13 +6,40 @@ export const constantRoute = [
     name: 'login',
     meta: {
       title: 'login',
-      hidden: true,
+      isShow: false,
     },
   },
   //登录成功，展示数据的路由
   {
     path: '/',
     component: () => import('@/layout/index.vue'),
+    name: 'layout',
+    meta: {
+      title: 'Layout',
+      isShow: true,
+      icon: '',
+    },
+    redirect: '/home',
+    children: [
+      {
+        path: '/home',
+        component: () => import('@/views/home/index.vue'),
+        meta: {
+          title: '首页',
+          isShow: true,
+          icon: 'HomeFilled',
+        },
+      },
+      {
+        path: '/test',
+        component: () => import('@/views/home/index.vue'),
+        meta: {
+          title: '测试',
+          isShow: true,
+          icon: 'HomeFilled',
+        },
+      },
+    ],
   },
   {
     path: '/404',
@@ -20,7 +47,7 @@ export const constantRoute = [
     name: '404',
     meta: {
       title: '404',
-      hidden: true,
+      isShow: false,
     },
   },
   //任意路由，若都不匹配，会跳转到404
@@ -30,7 +57,7 @@ export const constantRoute = [
     name: 'Any',
     meta: {
       title: '任意路由',
-      hidden: true,
+      isShow: false,
     },
   }
 ]
