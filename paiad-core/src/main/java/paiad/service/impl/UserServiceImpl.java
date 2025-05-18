@@ -67,9 +67,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         // 执行登录
         StpUtil.login(user.getId());
+        log.info("username为:'{}' 已完成登录", userDTO.getUsername());
         String tokenValue = StpUtil.getTokenValue();
-        Map<String,String> tokenMap = new HashMap<>();
-        tokenMap.put("token",tokenValue);
+        Map<String, String> tokenMap = new HashMap<>();
+        tokenMap.put("token", tokenValue);
 
         //登录成功后，将用户的信息放入会话中，方便全局调用
         StpUtil.getSession().set("userInfo", user);
@@ -83,51 +84,48 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     /**
      * 判断当前用户是否登录
-     * */
-    public SaResult isLogin(){
+     */
+    public SaResult isLogin() {
         return SaResult.data("Is login?:" + StpUtil.isLogin());
     }
 
 
     /**
      * 获取当前用户信息
-     * */
-    public SaResult getUserInfo(Object userInfo){
+     */
+    public SaResult getUserInfo(Object userInfo) {
         User user = (User) userInfo;
         UserVO userVO = new UserVO();
-        BeanUtils.copyProperties(user,userVO);
+        BeanUtils.copyProperties(user, userVO);
+        log.info("{}", userVO);
         return SaResult.data(userVO);
     }
 
     /**
      * 获取当前用户操作权限
-     * */
-    public SaResult getPermission(){
+     */
+    public SaResult getPermission() {
         List<String> permissionList = StpUtil.getPermissionList();
         return SaResult.data(permissionList);
     }
 
     /**
      * 获取当前用户角色
-     * */
-    public SaResult getRole(){
+     */
+    public SaResult getRole() {
         List<String> roleList = StpUtil.getRoleList();
         return SaResult.data(roleList);
     }
 
     /**
      * 用户登出
-     * */
-    public SaResult logout(){
+     */
+    public SaResult logout() {
+        User user = (User) StpUtil.getSession().get("userInfo");
+        log.info("username为:'{}' 已完成登出", user.getUsername());
         StpUtil.logout();
         return SaResult.ok();
     }
-
-
-
-
-
-
 
 
     /*********************************************private method*******************************************************/

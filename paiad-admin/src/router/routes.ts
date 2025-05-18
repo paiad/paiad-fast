@@ -177,7 +177,7 @@ export const constantRoute = [
         component: () => import('@/views/blog/index.vue'),
         name: 'BlogList',
         meta: {
-          title: '博客院',
+          title: '博客园',
           isShow: true,
           icon: 'tdesign:broccoli'
         }
