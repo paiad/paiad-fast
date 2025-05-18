@@ -1,6 +1,7 @@
 // 二次封装axios
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
+import useUserStore from '../store/modules/user.ts'
 const request = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
   timeout: 5000,
@@ -9,8 +10,19 @@ const request = axios.create({
 //请求
 request.interceptors.request.use(
   (config) => {
-    config.headers.user = "admin"
+    // config.headers.user = "admin"
+
+    // sa-token 已经封装好了，不需要在配置token了
+    // let userStore = useUserStore();
+    //
+    // if (userStore.token) {
+    //   config.headers.token = userStore.token
+    // }
+
     return config
+  },
+  (error) => {
+    return Promise.reject(error)
   },
 )
 

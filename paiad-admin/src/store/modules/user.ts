@@ -1,16 +1,20 @@
 import { defineStore } from 'pinia'
 import type { LoginFormData, LoginResponseData } from '../../api/user/type.ts'
-import { reqLogin } from '../../api/user'
+import { reqLogin, reqUserInfo } from '../../api/user'
 import type { UserState } from './types/type.ts'
 import { GET_TOKEN, SET_TOKEN } from '../../utils/token.ts'
-import { constantRoute} from '@/router/router.ts'
+import { constantRoute } from '@/router/router.ts'
 
 const useUserStore = defineStore('User', {
   // 小仓库存储数据的地方
-  state: ():UserState => {
+  state: (): UserState => {
     return {
-        token:GET_TOKEN(),
-        menuRoutes: constantRoute,
+      token: GET_TOKEN(),
+      menuRoutes: constantRoute,
+      userid: -1,
+      username: '',
+      nickname: '',
+      avatar: '',
     }
   },
   // 异步|逻辑的地方
@@ -19,16 +23,31 @@ const useUserStore = defineStore('User', {
     async userLogin(data: LoginFormData) {
       const res: LoginResponseData = await reqLogin(data)
       // console.log(res)
-      if(res.code == 200){
+      if (res.code == 200) {
         this.token = res.data.token
         SET_TOKEN((res.data.token as string))
         return 'ok'
-      }else{
+      } else {
         return Promise.reject(new Error(res.msg))
       }
     },
+
+    //获取用户信息
+    async userInfo() {
+      let res = await reqUserInfo()
+      console.log(res)
+      if (res.code === 200) {
+        this.userid = res.data.id as number
+        this.username = res.data.username as string
+        this.nickname = res.data.nickname as string
+        this.avatar = res.data.avatar as string
+        return 'ok'
+      } else {
+        return Promise.reject(new Error(res.message))
+      }
+    },
   },
-  getters: {},
+  getters: {}
 })
 
 export default useUserStore

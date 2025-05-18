@@ -7,17 +7,19 @@ import {
   ArrowDown,
 } from '@element-plus/icons-vue'
 import useLayOutSettingStore from '@/store/modules/setting'
-// let layoutSettingStore = useLayOutSettingStore()
-// import useUserStore from '@/store/modules/user'
 import { useRouter, useRoute } from 'vue-router'
+import useUserStore from '../../../store/modules/user.ts'
+
 let $router = useRouter()
 let $route = useRoute()
-// let userStore = useUserStore()
+let userStore = useUserStore()
 let dark = ref<boolean>(false)
-const updateRefsh = () => {
-  // layoutSettingStore.refsh = !layoutSettingStore.refsh
+let layoutSettingStore = useLayOutSettingStore()
+const updateRefresh = () => {
+  layoutSettingStore.refresh = !layoutSettingStore.refresh
 }
 
+//点击全屏
 const fullScreen = () => {
   let full = document.fullscreenElement
   if (!full) {
@@ -61,7 +63,7 @@ const setColor = () => {
 }
 </script>
 <template>
-  <el-button circle size="small" :icon="Refresh" @click="updateRefsh" />
+  <el-button circle size="small" :icon="Refresh" @click="updateRefresh" />
   <el-button circle size="small" :icon="FullScreen" @click="fullScreen" />
   <el-popover placement="bottom" title="主题设置" :width="200" trigger="hover">
     <el-form>
@@ -90,10 +92,10 @@ const setColor = () => {
     </template>
   </el-popover>
 
-<!--  <img :src="userStore.avatar" alt="" />-->
+  <img :src="userStore.avatar" alt="" />
   <el-dropdown>
     <span class="el-dropdown-link" style="cursor: pointer">
-<!--      {{ userStore.username }}-->
+      {{ userStore.nickname }}
       <el-icon class="el-icon--right">
         <arrow-down />
       </el-icon>

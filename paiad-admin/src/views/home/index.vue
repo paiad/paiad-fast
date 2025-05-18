@@ -5,7 +5,13 @@
 </template>
 
 <script setup lang="ts">
+import {onMounted} from 'vue'
+import useUserStore from '@/store/modules/user.ts'
 
+let useStore = useUserStore();
+onMounted(()=>{
+  useStore.userInfo();
+})
 </script>
 
 <style scoped>
