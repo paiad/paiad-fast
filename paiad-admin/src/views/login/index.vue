@@ -154,6 +154,7 @@ const rules = {
 .login-button {
   width: 100%;
   background-color: #51b8fd;
+  border-radius: 13px;
   border-color: #3f9fd0;
   font-weight: bold;
   transition: background-color 0.3s;
@@ -162,5 +163,9 @@ const rules = {
 .login-button:hover {
   background-color: #47b7fa;
   border-color: #3f9fd0;
+}
+
+.el-input :deep(.el-input__wrapper) {
+  border-radius: 13px; /* 修改圆角值 */
 }
 </style>

@@ -51,5 +51,8 @@ import { Icon } from '@iconify/vue'
 
 //路由鉴权守卫
 import './permission.ts'
+
+//暗黑模式
+import 'element-plus/theme-chalk/dark/css-vars.css'
 app.component('Icon', Icon)
 app.mount('#app')

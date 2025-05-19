@@ -28,8 +28,11 @@ export default defineConfig({
       '@': path.resolve('./src')
     }
   },
-  //配置跨域
+
   server: {
+    host: true,//允许局域网能够访问
+    port: 5173,
+    //配置跨域
     proxy: {
       '/dev-api': {
         target: 'http://localhost:9090',
@@ -37,6 +40,6 @@ export default defineConfig({
         // http://localhost:5173/dev-api/user/login => http://localhost:9090/api/user/login
         rewrite: (path) => path.replace(/^\/dev-api/, '/api'),
       }
-    }
+    },
   }
 })

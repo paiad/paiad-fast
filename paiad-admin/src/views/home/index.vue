@@ -3,10 +3,10 @@
     <el-card class="welcome-card">
       <div class="welcome-content">
         <div class="avatar">
-          <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif" alt="User Avatar">
+          <img :src="useStore.avatar" alt="User Avatar">
         </div>
         <div class="info">
-          <h1 class="greeting">欢迎回来，管理员！</h1>
+          <h1 class="greeting">欢迎回来，{{ useStore.nickname }}！</h1>
           <p class="tip">今天又是充满活力的一天！</p>
         </div>
       </div>
@@ -107,7 +107,9 @@ import {
 } from 'echarts/components';
 import VChart, { THEME_KEY } from 'vue-echarts';
 import type { EChartsOption } from 'echarts';
+import useUserStore from '@/store/modules/user.ts'
 
+let useStore = useUserStore()
 // 注册 ECharts 组件
 use([
   CanvasRenderer,
@@ -184,7 +186,7 @@ const barChartOptions = ref<EChartsOption>({
 // 数据和方法（如果有需要从后端获取数据等）
 onMounted(() => {
   // 可以在这里发起异步请求获取实际数据，然后更新 lineChartOptions.value 和 barChartOptions.value
-  console.log('Homepage mounted!');
+  // console.log('Homepage mounted!');
 });
 
 </script>
