@@ -5,7 +5,7 @@ export const constantRoute = [
     component: () => import('@/views/login/index.vue'),
     name: 'login',
     meta: {
-      title: 'login',
+      title: '登录',
       isShow: false,
       icon: 'skill-icons:webflow'
     }

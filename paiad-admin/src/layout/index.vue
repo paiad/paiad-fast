@@ -25,6 +25,7 @@ let LayOutSettingStore = useLayOutSettingStore()
           background-color="#fff"
           text-color="#708070"
           :collapse="LayOutSettingStore.isCollapse"
+          class="custom-menu"
           router
         >
           <!-- 动态路由菜单 -->
@@ -69,14 +70,15 @@ let LayOutSettingStore = useLayOutSettingStore()
 }
 
 .el-aside {
-  background-color: rgb(255, 255, 255) !important;
+  background-color: #ffffff !important;
   box-shadow: rgba(143, 142, 142, 0.7) 0px 10px 3px 0px;
   transition: all 0.3s;
 }
+
 .el-header {
   padding-left: 15px;
   margin-left: 1.2px;
-  background-color: #fff !important;
+  background-color: $base-header-bg-color !important;
   box-shadow: rgba(143, 142, 142, 0.7) 0px 1px 1px 0px;
   z-index: 999;
 }

@@ -10,9 +10,10 @@ import setting from '@/setting'
 <style lang="scss" scoped>
 .logo {
   display: flex;
-  justify-content: center; /* 水平居中 */
-  align-items: center; /* 垂直居中 */
+  justify-content: center;
+  align-items: center;
   height: $base-menu-logo-height;
+  padding-top: 5px;
   .image{
     width: 30px;
     height: 30px;

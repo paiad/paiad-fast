@@ -44,4 +44,17 @@ export default {
     </el-sub-menu>
   </template>
 </template>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.el-menu-item:hover{
+  background-color: $base-menu-bg-hover-color;
+}
+
+::v-deep(.el-menu-item:hover) {
+  background-color: $base-menu-bg-hover-color !important;
+}
+
+::v-deep(.el-sub-menu__title:hover) {
+  background-color: $base-menu-bg-hover-color !important;
+}
+
+</style>
