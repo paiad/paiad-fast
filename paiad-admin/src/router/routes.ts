@@ -124,7 +124,7 @@ export const constantRoute = [
         name: 'Trademark',
         meta: {
           title: '品牌管理',
-          icon: 'tabler:brand-cake',
+          icon: 'tabler:brand-codecov',
           isShow: true,
         },
       },
@@ -144,7 +144,7 @@ export const constantRoute = [
         name: 'Spu',
         meta: {
           title: 'Spu',
-          icon: 'entypo:creative-commons-noncommercial-us',
+          icon: 'lsicon:goods-outline',
           isShow: true,
         },
       },
@@ -154,7 +154,7 @@ export const constantRoute = [
         name: 'Sku',
         meta: {
           title: 'Sku',
-          icon: 'entypo:creative-commons-noncommercial-eu',
+          icon: 'solar:bag-5-outline',
           isShow: true,
         },
       },

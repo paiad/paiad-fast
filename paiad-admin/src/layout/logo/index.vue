@@ -14,6 +14,7 @@ import setting from '@/setting'
   align-items: center;
   height: $base-menu-logo-height;
   padding-top: 5px;
+  background: #f6f9fc;
   .image{
     width: 30px;
     height: 30px;
