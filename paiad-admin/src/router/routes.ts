@@ -51,17 +51,58 @@ export const constantRoute = [
       isShow: false
     }
   },
-  //任意路由，若都不匹配，会跳转到404
+
+  //blog
   {
-    path: '/:pathMatch(.*)*',
-    redirect: '/404',
-    name: 'Any',
+    path: '/',
+    component: () => import('@/layout/index.vue'),
+    name: 'Blog',
     meta: {
-      title: '任意路由',
-      isShow: false
-    }
+      title: '',
+      isShow: true,
+      icon: 'mdi:blog'
+    },
+    children: [
+      {
+        path: '/paiad',
+        component: () => import('@/views/blog/index.vue'),
+        name: 'BlogList',
+        meta: {
+          title: '博客园',
+          isShow: true,
+          icon: 'tdesign:broccoli'
+        }
+      }
+    ]
   },
 
+  //test
+  {
+    path: '/',
+    component: () => import('@/layout/index.vue'),
+    name: 'Test',
+    meta: {
+      title: '',
+      isShow: true,
+      icon: ''
+    },
+    children: [
+      {
+        path: '/test',
+        component: () => import('@/views/test/index.vue'),
+        name: '测试',
+        meta: {
+          title: '测试',
+          isShow: true,
+          icon: 'hugeicons:test-tube-01',
+        },
+      }
+    ]
+  },
+]
+
+//异步路由
+export const asyncRoute = [
   //acl
   {
     path: '/acl',
@@ -170,52 +211,17 @@ export const constantRoute = [
       },
     ],
   },
+]
 
-  //blog
+//任意路由
+export const anyRoute= [
   {
-    path: '/',
-    component: () => import('@/layout/index.vue'),
-    name: 'Blog',
+    path: '/:pathMatch(.*)*',
+    redirect: '/404',
+    name: 'Any',
     meta: {
-      title: '',
-      isShow: true,
-      icon: 'mdi:blog'
-    },
-    children: [
-      {
-        path: '/paiad',
-        component: () => import('@/views/blog/index.vue'),
-        name: 'BlogList',
-        meta: {
-          title: '博客园',
-          isShow: true,
-          icon: 'tdesign:broccoli'
-        }
-      }
-    ]
-  },
-
-  //test
-  {
-    path: '/',
-    component: () => import('@/layout/index.vue'),
-    name: 'Test',
-    meta: {
-      title: '',
-      isShow: true,
-      icon: ''
-    },
-    children: [
-      {
-        path: '/test',
-        component: () => import('@/views/test/index.vue'),
-        name: '测试',
-        meta: {
-          title: '测试',
-          isShow: true,
-          icon: 'hugeicons:test-tube-01',
-        },
-      }
-    ]
+      title: '任意路由',
+      isShow: false
+    }
   },
 ]

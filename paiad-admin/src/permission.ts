@@ -3,10 +3,19 @@ import setting from './setting'
 import 'nprogress/nprogress.css'
 import nprogress from 'nprogress'
 import pinia from './store'
-import useUserStore from './store/modules/user'
+import useUserStore from './store/modules/user.ts'
 
 nprogress.configure({ showSpinner: false })
 const userStore = useUserStore(pinia)
+
+// 检查是否有权限访问目标路径
+function hasAccessToPath(routes: any[], path: string): boolean {
+  return routes.some(route => {
+    if (path === route.path || path.startsWith(route.path)) return true
+    if (route.children) return hasAccessToPath(route.children, path)
+    return false
+  })
+}
 
 // 全局前置守卫
 router.beforeEach(async (to: any, from: any, next: any) => {
@@ -14,15 +23,13 @@ router.beforeEach(async (to: any, from: any, next: any) => {
   nprogress.start()
   const token = userStore.token
   const username = userStore.username
-  const role = userStore.role
-  console.log(role)
-  // console.log(username, token)
+
   if (token) {
     if (to.path === '/login') {
       next({ path: '/' })
     } else {
       if (username) {
-        console.log(to.meta.role)
+        const role = userStore.role
         if (to.meta.roles && !to.meta.roles.includes(role)) {
           return next('/404') // 或 next(false) 拒绝进入，或者重定向到无权限页
         }
@@ -30,12 +37,16 @@ router.beforeEach(async (to: any, from: any, next: any) => {
       } else {
         try {
           await userStore.userInfo()
-          next();
-          // // 添加异步路由
-          // asyncRoute.forEach((route) => {
-          //   router.addRoute(route)
-          // })
-          // next({ ...to, replace: true })
+          const menuRoutes = userStore.menuRoutes
+          const redirectPath = (to.query.redirect || to.fullPath) as string
+
+          const hasPermission = hasAccessToPath(menuRoutes, redirectPath)
+
+          if (hasPermission) {
+            next(redirectPath)
+          } else {
+            next('/login')
+          }
         } catch (error) {
           await userStore.userLogout()
           next({ path: '/login', query: { redirect: to.path } })

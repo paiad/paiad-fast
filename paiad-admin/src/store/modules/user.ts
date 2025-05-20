@@ -4,6 +4,32 @@ import { reqLogin, reqUserInfo } from '../../api/user'
 import type { UserState } from './types/type.ts'
 import { GET_TOKEN, REMOVE_TOKEN, SET_TOKEN } from '../../utils/token.ts'
 import { constantRoute } from '@/router/routes.ts'
+import { anyRoute, asyncRoute } from '../../router/routes.ts'
+import router from '../../router'
+//深拷贝
+import cloneDeep from 'lodash/cloneDeep'
+
+//过滤异步路由
+export function filterAsyncRoute(routes:any, role:any) {
+  const res:any = []
+
+  routes.forEach(route => {
+    const tmp = { ...route }
+
+    // 判断当前路由是否限制了角色访问
+    const routeRoles = tmp.meta?.roles
+    if (!routeRoles || routeRoles.includes(role)) {
+      // 如果有子路由，递归处理
+      if (tmp.children && tmp.children.length > 0) {
+        tmp.children = filterAsyncRoute(tmp.children, role)
+      }
+      res.push(tmp)
+    }
+  })
+
+  return res
+}
+
 
 const useUserStore = defineStore('User', {
   // 小仓库存储数据的地方
@@ -45,6 +71,13 @@ const useUserStore = defineStore('User', {
         this.avatar = res.data.avatar as string
         this.role = res.data.role as string
         this.permission = res.data.permission as string
+        //根据Role路由过滤路由
+        let userAsyncRoute = filterAsyncRoute(cloneDeep(asyncRoute), res.data.role);
+        this.menuRoutes = [...constantRoute, ...userAsyncRoute, ...anyRoute];
+        [...constantRoute, ...userAsyncRoute, ...anyRoute].forEach((route:any)=>{
+          router.addRoute(route);
+        });
+
         return 'ok'
       } else {
         return Promise.reject(new Error(res.message))
