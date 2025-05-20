@@ -117,7 +117,7 @@ export const asyncRoute = [
     meta: {
       title: '商品管理',
       isShow: true,
-      icon: 'ep:goods',
+      icon: 'tabler:windmill',
       roles: ['admin']
     },
     redirect: '/product/trademark',
@@ -171,7 +171,7 @@ export const coreRoute = [
   {
     path: '/',
     component: () => import('@/layout/index.vue'),
-    name: 'Blog',
+    name: '',
     meta: {
       title: '',
       isShow: true,
@@ -179,13 +179,35 @@ export const coreRoute = [
     },
     children: [
       {
-        path: '/paiad',
+        path: '/blog',
         component: () => import('@/views/blog/index.vue'),
         name: 'BlogList',
         meta: {
           title: '博客园',
           isShow: true,
           icon: 'tdesign:broccoli'
+        }
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('@/layout/index.vue'),
+    name: '',
+    meta: {
+      title: '',
+      isShow: true,
+      icon: ''
+    },
+    children: [
+      {
+        path: '/soybean',
+        component: () => import('@/views/soybean/index.vue'),
+        name: 'Soybean',
+        meta: {
+          title: 'Soybean',
+          isShow: true,
+          icon: 'mdi:cloud-outline'
         }
       }
     ]

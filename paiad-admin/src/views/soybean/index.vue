@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const url = 'https://www.cnblogs.com/'  // 👈 你要展示的博客网址
+const url = 'https://elp.soybeanjs.cn'
 </script>
 
 <template>

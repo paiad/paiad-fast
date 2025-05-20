@@ -88,7 +88,7 @@ $base-menu-width: 200px;
 
 .el-main {
   position: absolute;
-  padding: 0;
+  padding: 1px;
   left: $base-menu-width;
   top: 60px;
   transition: all 0.3s;
