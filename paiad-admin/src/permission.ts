@@ -14,12 +14,18 @@ router.beforeEach(async (to: any, from: any, next: any) => {
   nprogress.start()
   const token = userStore.token
   const username = userStore.username
+  const role = userStore.role
+  console.log(role)
   // console.log(username, token)
   if (token) {
     if (to.path === '/login') {
       next({ path: '/' })
     } else {
       if (username) {
+        console.log(to.meta.role)
+        if (to.meta.roles && !to.meta.roles.includes(role)) {
+          return next('/404') // 或 next(false) 拒绝进入，或者重定向到无权限页
+        }
         next()
       } else {
         try {

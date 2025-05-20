@@ -75,16 +75,6 @@ export const constantRoute = [
     redirect: '/acl/user',
     children: [
       {
-        path: '/acl/user',
-        component: () => import('@/views/acl/user/index.vue'),
-        name: 'User',
-        meta: {
-          title: '用户管理',
-          isShow: true,
-          icon: 'lets-icons:user'
-        }
-      },
-      {
         path: '/acl/role',
         component: () => import('@/views/acl/role/index.vue'),
         name: 'Role',
@@ -92,6 +82,26 @@ export const constantRoute = [
           title: '角色管理',
           isShow: true,
           icon: 'ix:roles'
+        }
+      },
+      {
+        path: '/acl/admin',
+        component: () => import('@/views/acl/admin/index.vue'),
+        name: 'admin',
+        meta: {
+          title: '管理员',
+          isShow: true,
+          icon: 'ri:admin-line',
+          roles:['admin']
+        }
+      },   {
+        path: '/acl/user',
+        component: () => import('@/views/acl/user/index.vue'),
+        name: 'user',
+        meta: {
+          title: '普通用户',
+          isShow: true,
+          icon: 'lets-icons:user',
         }
       },
       {
@@ -203,7 +213,7 @@ export const constantRoute = [
         meta: {
           title: '测试',
           isShow: true,
-          icon: 'hugeicons:test-tube-01'
+          icon: 'hugeicons:test-tube-01',
         },
       }
     ]

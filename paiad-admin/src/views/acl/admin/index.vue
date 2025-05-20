@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div>user</div>
+  <div>admin</div>
 </template>
 
 <style scoped>

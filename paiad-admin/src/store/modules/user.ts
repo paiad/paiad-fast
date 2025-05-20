@@ -14,7 +14,9 @@ const useUserStore = defineStore('User', {
       userid: -1,
       username: '',
       nickname: '',
-      avatar: ''
+      avatar: '',
+      role:'',
+      permission:'',
     }
   },
   // 异步|逻辑的地方
@@ -41,6 +43,8 @@ const useUserStore = defineStore('User', {
         this.username = res.data.username as string
         this.nickname = res.data.nickname as string
         this.avatar = res.data.avatar as string
+        this.role = res.data.role as string
+        this.permission = res.data.permission as string
         return 'ok'
       } else {
         return Promise.reject(new Error(res.message))
@@ -53,6 +57,8 @@ const useUserStore = defineStore('User', {
       this.username = ''
       this.nickname = ''
       this.avatar = ''
+      this.role = ''
+      this.permission = ''
       //清楚：token
       REMOVE_TOKEN();
     }
