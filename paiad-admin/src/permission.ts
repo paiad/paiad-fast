@@ -66,3 +66,20 @@ router.beforeEach(async (to: any, from: any, next: any) => {
 router.afterEach((route) => {
   nprogress.done()
 })
+
+// v-permission按钮级别的权限校验
+export default {
+  mounted(el: HTMLElement, binding: any) {
+    const store = useUserStore()
+    console.log(store.permission)
+    const value = binding.value
+    if (value && Array.isArray(value)) {
+      const hasPermission = value.some(perm => store.permission.includes(perm))
+      if (!hasPermission) {
+        el.parentNode?.removeChild(el)
+      }
+    } else {
+      throw new Error('v-permission error!')
+    }
+  }
+}

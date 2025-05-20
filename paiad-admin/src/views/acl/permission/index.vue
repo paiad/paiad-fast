@@ -3,9 +3,40 @@
 </script>
 
 <template>
+  <div class="button-container">
+    <el-button
+      type="primary"
+      v-permission="['user:add']"
+    >
+      添加用户
+    </el-button>
+
+    <el-button
+      v-permission="['user:delete', 'admin']"
+      type="danger"
+    >
+      删除用户
+    </el-button>
+
+    <el-button
+      type="success"
+      v-permission="['user:get']"
+    >
+      查询用户
+    </el-button>
+
+    <el-button
+      type="warning"
+      v-permission="['user:update']"
+    >
+      查询用户
+    </el-button>
+  </div>
 
 </template>
 
 <style scoped>
-
+.button-container{
+  padding: 20px;
+}
 </style>

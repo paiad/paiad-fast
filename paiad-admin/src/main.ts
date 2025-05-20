@@ -55,4 +55,8 @@ import './permission.ts'
 //暗黑模式
 import 'element-plus/theme-chalk/dark/css-vars.css'
 app.component('Icon', Icon)
+
+//注册v-permission
+import permission from './permission.ts'
+app.directive('permission', permission)
 app.mount('#app')

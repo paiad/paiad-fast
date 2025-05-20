@@ -102,7 +102,7 @@ export const asyncRoute = [
         component: () => import('@/views/acl/permission/index.vue'),
         name: 'Permission',
         meta: {
-          title: '菜单管理',
+          title: '权限管理',
           isShow: true,
           icon: 'icon-park-outline:permissions'
         }
