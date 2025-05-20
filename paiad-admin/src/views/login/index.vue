@@ -153,19 +153,21 @@ const rules = {
 
 .login-button {
   width: 100%;
-  background-color: #51b8fd;
-  border-radius: 13px;
-  border-color: #3f9fd0;
+  background: linear-gradient(to right, #91d0fa, #c2b0fc);
+  border-radius: 10px;
   font-weight: bold;
-  transition: background-color 0.3s;
+  transition: background 0.3s, transform 0.2s;
+  color: #fdfcfc;
+  border: none;
+  padding: 15px;
+  cursor: pointer;
 }
 
 .login-button:hover {
-  background-color: #47b7fa;
-  border-color: #3f9fd0;
+  transform: translateY(-0.6px);
 }
 
 .el-input :deep(.el-input__wrapper) {
-  border-radius: 13px; /* 修改圆角值 */
+  border-radius: 13px;
 }
 </style>

@@ -51,54 +51,6 @@ export const constantRoute = [
       isShow: false
     }
   },
-
-  //blog
-  {
-    path: '/',
-    component: () => import('@/layout/index.vue'),
-    name: 'Blog',
-    meta: {
-      title: '',
-      isShow: true,
-      icon: 'mdi:blog'
-    },
-    children: [
-      {
-        path: '/paiad',
-        component: () => import('@/views/blog/index.vue'),
-        name: 'BlogList',
-        meta: {
-          title: '博客园',
-          isShow: true,
-          icon: 'tdesign:broccoli'
-        }
-      }
-    ]
-  },
-
-  //test
-  {
-    path: '/',
-    component: () => import('@/layout/index.vue'),
-    name: 'Test',
-    meta: {
-      title: '',
-      isShow: true,
-      icon: ''
-    },
-    children: [
-      {
-        path: '/test',
-        component: () => import('@/views/test/index.vue'),
-        name: '测试',
-        meta: {
-          title: '测试',
-          isShow: true,
-          icon: 'hugeicons:test-tube-01',
-        },
-      }
-    ]
-  },
 ]
 
 //异步路由
@@ -166,6 +118,7 @@ export const asyncRoute = [
       title: '商品管理',
       isShow: true,
       icon: 'ep:goods',
+      roles: ['admin']
     },
     redirect: '/product/trademark',
     children: [
@@ -213,6 +166,55 @@ export const asyncRoute = [
   },
 ]
 
+export const coreRoute = [
+  //blog
+  {
+    path: '/',
+    component: () => import('@/layout/index.vue'),
+    name: 'Blog',
+    meta: {
+      title: '',
+      isShow: true,
+      icon: 'mdi:blog'
+    },
+    children: [
+      {
+        path: '/paiad',
+        component: () => import('@/views/blog/index.vue'),
+        name: 'BlogList',
+        meta: {
+          title: '博客园',
+          isShow: true,
+          icon: 'tdesign:broccoli'
+        }
+      }
+    ]
+  },
+
+  //test
+  {
+    path: '/',
+    component: () => import('@/layout/index.vue'),
+    name: 'Test',
+    meta: {
+      title: '',
+      isShow: true,
+      icon: ''
+    },
+    children: [
+      {
+        path: '/test',
+        component: () => import('@/views/test/index.vue'),
+        name: '测试',
+        meta: {
+          title: '测试',
+          isShow: true,
+          icon: 'hugeicons:test-tube-01',
+        },
+      }
+    ]
+  },
+]
 //任意路由
 export const anyRoute= [
   {

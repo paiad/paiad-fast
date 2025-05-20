@@ -4,7 +4,7 @@ import { reqLogin, reqUserInfo } from '../../api/user'
 import type { UserState } from './types/type.ts'
 import { GET_TOKEN, REMOVE_TOKEN, SET_TOKEN } from '../../utils/token.ts'
 import { constantRoute } from '@/router/routes.ts'
-import { anyRoute, asyncRoute } from '../../router/routes.ts'
+import { anyRoute, asyncRoute, coreRoute } from '../../router/routes.ts'
 import router from '../../router'
 //深拷贝
 import cloneDeep from 'lodash/cloneDeep'
@@ -71,12 +71,20 @@ const useUserStore = defineStore('User', {
         this.avatar = res.data.avatar as string
         this.role = res.data.role as string
         this.permission = res.data.permission as string
-        //根据Role路由过滤路由
-        let userAsyncRoute = filterAsyncRoute(cloneDeep(asyncRoute), res.data.role);
-        this.menuRoutes = [...constantRoute, ...userAsyncRoute, ...anyRoute];
-        [...constantRoute, ...userAsyncRoute, ...anyRoute].forEach((route:any)=>{
-          router.addRoute(route);
-        });
+        // 根据角色过滤动态路由
+        const userAsyncRoute = filterAsyncRoute(cloneDeep(asyncRoute), res.data.role)
+        const allRoutes = [
+          ...constantRoute,
+          ...coreRoute,
+          ...userAsyncRoute,
+          ...anyRoute
+        ]
+        this.menuRoutes = allRoutes
+
+        // 注册到路由器中
+        allRoutes.forEach((route: any) => {
+          router.addRoute(route)
+        })
 
         return 'ok'
       } else {
@@ -92,6 +100,7 @@ const useUserStore = defineStore('User', {
       this.avatar = ''
       this.role = ''
       this.permission = ''
+      this.menuRoutes = []
       //清楚：token
       REMOVE_TOKEN();
     }

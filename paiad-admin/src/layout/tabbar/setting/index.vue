@@ -65,32 +65,32 @@ const setColor = () => {
 <template>
   <el-button circle size="small" :icon="Refresh" @click="updateRefresh" />
   <el-button circle size="small" :icon="FullScreen" @click="fullScreen" />
-  <el-popover placement="bottom" title="主题设置" :width="200" trigger="hover">
-    <el-form>
-      <el-form-item label="主题颜色">
-        <el-color-picker
-          v-model="color"
-          show-alpha
-          :predefine="predefineColors"
-          size="small"
-          @change="setColor"
-        />
-      </el-form-item>
-      <el-form-item label="暗黑模式">
-        <el-switch
-          v-model="dark"
-          size="small"
-          inline-prompt
-          active-icon="MoonNight"
-          inactive-icon="Sunny"
-          @change="changeDark"
-        />
-      </el-form-item>
-    </el-form>
-    <template #reference>
-      <el-button circle size="small" :icon="Setting" />
-    </template>
-  </el-popover>
+<!--  <el-popover placement="bottom" title="主题设置" :width="200" trigger="hover">-->
+<!--    <el-form>-->
+<!--      <el-form-item label="主题颜色">-->
+<!--        <el-color-picker-->
+<!--          v-model="color"-->
+<!--          show-alpha-->
+<!--          :predefine="predefineColors"-->
+<!--          size="small"-->
+<!--          @change="setColor"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="暗黑模式">-->
+<!--        <el-switch-->
+<!--          v-model="dark"-->
+<!--          size="small"-->
+<!--          inline-prompt-->
+<!--          active-icon="MoonNight"-->
+<!--          inactive-icon="Sunny"-->
+<!--          @change="changeDark"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--    </el-form>-->
+<!--    <template #reference>-->
+<!--      <el-button circle size="small" :icon="Setting" />-->
+<!--    </template>-->
+<!--  </el-popover>-->
 
   <img :src="userStore.avatar" alt="" />
   <el-dropdown>
