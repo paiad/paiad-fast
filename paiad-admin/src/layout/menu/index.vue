@@ -45,15 +45,8 @@ export default {
   </template>
 </template>
 <style lang="scss" scoped>
-.el-menu-item{
-  --el-border-radius-small: 20px
-}
-
-.el-popper.is-pure {
-  border-radius: 20px;
-}
 .el-menu-item:hover{
-  border-radius: 15px;
+  border-radius: 12px;
   background-color: $base-menu-bg-hover-color;
 }
 
@@ -62,6 +55,7 @@ export default {
 }
 
 ::v-deep(.el-sub-menu__title:hover) {
+  border-radius: 12px;
   background-color: $base-menu-bg-hover-color !important;
 }
 

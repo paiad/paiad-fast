@@ -75,8 +75,8 @@ const useUserStore = defineStore('User', {
         const userAsyncRoute = filterAsyncRoute(cloneDeep(asyncRoute), res.data.role)
         const allRoutes = [
           ...constantRoute,
-          ...coreRoute,
           ...userAsyncRoute,
+          ...coreRoute,
           ...anyRoute
         ]
         this.menuRoutes = allRoutes
