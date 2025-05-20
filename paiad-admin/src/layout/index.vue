@@ -61,7 +61,7 @@ let LayOutSettingStore = useLayOutSettingStore()
 }
 .layout-container .el-main {
   position: absolute;
-  padding: 20px;
+  padding: 0px;
   left: 200px;
   top: 60px;
   transition: all 0.3s;
@@ -71,7 +71,7 @@ let LayOutSettingStore = useLayOutSettingStore()
 
 .el-aside {
   background-color: #ffffff !important;
-  box-shadow: rgba(143, 142, 142, 0.7) 0px 10px 3px 0px;
+  box-shadow: rgb(178, 178, 178) 0px 10px 3px 0px;
   transition: all 0.3s;
 }
 
@@ -79,7 +79,7 @@ let LayOutSettingStore = useLayOutSettingStore()
   padding-left: 15px;
   margin-left: 1.2px;
   background-color: $base-header-bg-color !important;
-  box-shadow: rgba(143, 142, 142, 0.7) 0px 1px 1px 0px;
+  box-shadow: rgb(229, 227, 227) 0px 1px 1px 0px;
   z-index: 999;
 }
 .isCollapse {
