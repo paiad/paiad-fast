@@ -17,10 +17,13 @@ watch(
 <template>
   <!-- 路由组件出口的位置 -->
   <router-view v-slot="{ Component }">
-    <transition name="fade">
-      <component :is="Component" v-if="flag" />
-    </transition>
+    <!--    移除过渡效果-->
+    <!--    <transition name="fade">-->
+    <!--      <component :is="Component" v-if="flag" />-->
+    <!--    </transition>-->
+    <component :is="Component" v-if="flag" />
   </router-view>
+
 </template>
 <style lang="scss" scoped>
 .fade-enter-from {

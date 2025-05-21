@@ -4,6 +4,7 @@
 
 <template>
   <div class="button-container">
+    <div>不同级别的用户能看到不同的按钮</div>
     <el-button
       type="primary"
       v-permission="['user:add']"

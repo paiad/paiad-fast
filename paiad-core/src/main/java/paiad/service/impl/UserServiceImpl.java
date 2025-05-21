@@ -43,8 +43,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         User user = new User();
         user.setId(generateId());
         user.setUsername(userDTO.getUsername());
-        user.setPassword(encodePassword(userDTO.getPassword())); // 加密密码
-        user.setRole("user");//默认role = 'user'
+        user.setPassword(encodePassword(userDTO.getPassword()));
+        user.setRole("user");//默认 role = 'user'
+        user.setPermission("user:get");//默认 permission = 'user:get'
         user.setStatus(1);
         userMapper.insert(user);
 
