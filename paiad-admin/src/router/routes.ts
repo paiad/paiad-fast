@@ -147,7 +147,7 @@ export const asyncRoute = [
         component: () => import('@/views/product/spu/index.vue'),
         name: 'Spu',
         meta: {
-          title: 'Spu',
+          title: '标准产品单元',
           icon: 'lsicon:goods-outline',
           isShow: true,
         },
@@ -157,7 +157,7 @@ export const asyncRoute = [
         component: () => import('@/views/product/sku/index.vue'),
         name: 'Sku',
         meta: {
-          title: 'Sku',
+          title: '库存量单位',
           icon: 'solar:bag-5-outline',
           isShow: true,
         },
@@ -186,29 +186,6 @@ export const coreRoute = [
           title: '博客园',
           isShow: true,
           icon: 'tdesign:broccoli'
-        }
-      }
-    ]
-  },
-  {
-    path: '/',
-    component: () => import('@/layout/index.vue'),
-    name: '',
-    meta: {
-      title: '',
-      isShow: true,
-      icon: '',
-      roles:['admin'],
-    },
-    children: [
-      {
-        path: '/soybean',
-        component: () => import('@/views/soybean/index.vue'),
-        name: 'Soybean',
-        meta: {
-          title: 'Soybean',
-          isShow: true,
-          icon: 'mdi:cloud-outline',
         }
       }
     ]

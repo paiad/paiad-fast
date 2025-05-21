@@ -122,9 +122,9 @@ const lineChartOptions = ref<EChartsOption>({
       smooth: true,
       data: [120, 200, 150, 80, 70, 110, 130],
       areaStyle: {},
-      lineStyle: { width: 3, color: '#409EFF' },
+      lineStyle: { width: 3, color: '#7491c2' },
       symbol: 'circle',
-      itemStyle: { color: '#409EFF' }
+      itemStyle: { color: '#8ea9d7' }
     }
   ]
 })
@@ -212,6 +212,20 @@ const pieChartOptions = ref<EChartsOption>({
   margin-bottom: 20px;
 }
 
+.extra-row .el-col {
+  display: flex;
+  flex-direction: column;
+}
+.extra-row .el-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.el-card .el-timeline,
+.el-card .chart {
+  flex: 1;
+}
+
 .stats-card .el-card__body {
   padding: 20px;
 }
@@ -255,19 +269,4 @@ const pieChartOptions = ref<EChartsOption>({
   font-size: 16px;
   color: #303133;
 }
-
-.extra-row .el-col {
-  display: flex;
-  flex-direction: column;
-}
-.extra-row .el-card {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-.el-card .el-timeline,
-.el-card .chart {
-  flex: 1;
-}
-
 </style>
