@@ -49,7 +49,7 @@
 
 <script>
 export default {
-  name: 'FullScreenLoader',
+  name: 'NotFound',
   methods: {
     goHome() {
       this.$router.push('/');

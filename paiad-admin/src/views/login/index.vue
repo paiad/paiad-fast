@@ -11,7 +11,7 @@
 
     <div class="login-panel">
       <div style="display: flex; align-items: center;justify-content: center; height: 45px;margin-bottom: 15px">
-        <img src="https://paiad.online/logo.svg" alt="图标" style="width: 32px; height: 32px; margin-right: 10px;">
+        <img src="../../../public/logo.svg" alt="图标" style="width: 32px; height: 32px; margin-right: 10px;">
         <span style="font-size: 24px; font-weight: bold; line-height: 32px;">欢迎登录</span>
       </div>
       <el-form :model="loginForm" :rules="rules" ref="loginFormRef" label-position="top" class="form">

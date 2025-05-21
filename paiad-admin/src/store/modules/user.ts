@@ -73,10 +73,11 @@ const useUserStore = defineStore('User', {
         this.permission = res.data.permission as string
         // 根据角色过滤动态路由
         const userAsyncRoute = filterAsyncRoute(cloneDeep(asyncRoute), res.data.role)
+        const userCoreRoute = filterAsyncRoute(cloneDeep(coreRoute), res.data.role)
         const allRoutes = [
           ...constantRoute,
           ...userAsyncRoute,
-          ...coreRoute,
+          ...userCoreRoute,
           ...anyRoute
         ]
         this.menuRoutes = allRoutes

@@ -197,7 +197,8 @@ export const coreRoute = [
     meta: {
       title: '',
       isShow: true,
-      icon: ''
+      icon: '',
+      roles:['admin'],
     },
     children: [
       {
@@ -207,7 +208,7 @@ export const coreRoute = [
         meta: {
           title: 'Soybean',
           isShow: true,
-          icon: 'mdi:cloud-outline'
+          icon: 'mdi:cloud-outline',
         }
       }
     ]
