@@ -1,206 +1,183 @@
 <template>
   <div class="dashboard-homepage">
+    <!-- 欢迎卡片 -->
     <el-card class="welcome-card">
       <div class="welcome-content">
         <div class="avatar">
-          <img :src="useStore.avatar" alt="User Avatar">
+          <img :src="useStore.avatar" alt="User Avatar" />
         </div>
         <div class="info">
           <h1 class="greeting">欢迎回来，{{ useStore.nickname }}！</h1>
-          <p class="tip">今天又是充满活力的一天！</p>
+          <p class="tip">愿你今天工作顺利、心情愉快！</p>
         </div>
       </div>
     </el-card>
 
+    <!-- 四项统计卡片 -->
     <el-row :gutter="20" class="stats-row">
-      <el-col :span="6">
+      <el-col :span="6" v-for="(stat, index) in stats" :key="index">
         <el-card class="stats-card" shadow="hover">
           <div class="card-content">
-            <div class="icon primary">
-              <Icon icon="mdi:account-group" width="36" height="36" />
+            <div :class="['icon', stat.type]">
+              <Icon :icon="stat.icon" width="36" height="36" />
             </div>
             <div class="detail">
-              <div class="value">2,456</div>
-              <div class="label">用户总数</div>
-            </div>
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card class="stats-card" shadow="hover">
-          <div class="card-content">
-            <div class="icon success">
-              <Icon icon="mdi:cart-outline" width="36" height="36" />
-            </div>
-            <div class="detail">
-              <div class="value">1,888</div>
-              <div class="label">今日订单</div>
-            </div>
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card class="stats-card" shadow="hover">
-          <div class="card-content">
-            <div class="icon warning">
-              <Icon icon="mdi:currency-usd" width="36" height="36" />
-            </div>
-            <div class="detail">
-              <div class="value">¥ 12,345</div>
-              <div class="label">今日销售额</div>
-            </div>
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card class="stats-card" shadow="hover">
-          <div class="card-content">
-            <div class="icon danger">
-              <Icon icon="mdi:bug" width="36" height="36" />
-            </div>
-            <div class="detail">
-              <div class="value">12</div>
-              <div class="label">待处理 Bug</div>
+              <div class="value">{{ stat.value }}</div>
+              <div class="label">{{ stat.label }}</div>
             </div>
           </div>
         </el-card>
       </el-col>
     </el-row>
 
+    <!-- 图表区域 -->
     <el-row :gutter="20" class="charts-row">
       <el-col :span="12">
         <el-card shadow="hover">
-          <template #header>
-            <div class="card-header">
-              <span>近七日访问量趋势</span>
-            </div>
-          </template>
+          <template #header><div class="card-header">近七日访问量趋势</div></template>
           <v-chart class="chart" :option="lineChartOptions" autoresize />
         </el-card>
       </el-col>
       <el-col :span="12">
         <el-card shadow="hover">
-          <template #header>
-            <div class="card-header">
-              <span>产品销售额对比</span>
-            </div>
-          </template>
+          <template #header><div class="card-header">产品销售额对比</div></template>
           <v-chart class="chart" :option="barChartOptions" autoresize />
         </el-card>
       </el-col>
     </el-row>
 
+    <!-- 待办事项 & 用户类型占比 -->
+    <el-row :gutter="20" class="extra-row">
+      <el-col :span="12">
+        <el-card shadow="hover">
+          <template #header><div class="card-header">今日待办事项</div></template>
+          <el-timeline>
+            <el-timeline-item v-for="(item, index) in todos" :key="index" :timestamp="item.time" :type="item.type">
+              {{ item.content }}
+            </el-timeline-item>
+          </el-timeline>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card shadow="hover">
+          <template #header><div class="card-header">用户类型占比</div></template>
+          <v-chart class="chart" :option="pieChartOptions" autoresize />
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-// 导入 ECharts 相关
-import { use } from 'echarts/core';
-import { CanvasRenderer } from 'echarts/renderers';
-import { LineChart, BarChart } from 'echarts/charts';
+import { ref } from 'vue'
+import { use } from 'echarts/core'
+import { CanvasRenderer } from 'echarts/renderers'
+import { LineChart, BarChart, PieChart } from 'echarts/charts'
 import {
   TitleComponent,
   TooltipComponent,
   GridComponent,
-  LegendComponent // 添加 LegendComponent 用于柱状图
-} from 'echarts/components';
-import VChart, { THEME_KEY } from 'vue-echarts';
-import type { EChartsOption } from 'echarts';
+  LegendComponent
+} from 'echarts/components'
+import VChart from 'vue-echarts'
+import type { EChartsOption } from 'echarts'
+import { Icon } from '@iconify/vue'
 import useUserStore from '@/store/modules/user.ts'
 
-let useStore = useUserStore()
-// 注册 ECharts 组件
+const useStore = useUserStore()
+
 use([
   CanvasRenderer,
   LineChart,
   BarChart,
+  PieChart,
   TitleComponent,
   TooltipComponent,
   GridComponent,
-  LegendComponent // 注册 LegendComponent
-]);
+  LegendComponent
+])
 
-// 定义图表选项
+const stats = [
+  { icon: 'mdi:account-group', label: '用户总数', value: '2,456', type: 'primary' },
+  { icon: 'mdi:cart-outline', label: '今日订单', value: '1,888', type: 'success' },
+  { icon: 'mdi:currency-usd', label: '今日销售额', value: '¥12,345', type: 'warning' },
+  { icon: 'mdi:bug', label: '待处理 Bug', value: '12', type: 'danger' }
+]
+
+const todos = [
+  { time: '09:00', content: '更新产品数据', type: 'primary' },
+  { time: '11:00', content: '修复用户反馈问题', type: 'success' },
+  { time: '14:00', content: '审查报表数据', type: 'warning' },
+  { time: '16:30', content: '部署测试版本', type: 'danger' }
+]
+
 const lineChartOptions = ref<EChartsOption>({
-  title: {
-    // text: '近七日访问量趋势', // 标题已在卡片头，这里可以省略
-    left: 'center'
-  },
-  tooltip: {
-    trigger: 'axis',
-    axisPointer: {
-      type: 'shadow'
-    }
-  },
-  xAxis: {
-    type: 'category',
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-  },
-  yAxis: {
-    type: 'value'
-  },
+  tooltip: { trigger: 'axis' },
+  xAxis: { type: 'category', data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] },
+  yAxis: { type: 'value' },
   series: [
     {
       name: '访问量',
       type: 'line',
-      smooth: true, // 平滑曲线
+      smooth: true,
       data: [120, 200, 150, 80, 70, 110, 130],
-      itemStyle: {
-        color: '#409EFF' // Element Plus Primary color
-      }
+      areaStyle: {},
+      lineStyle: { width: 3, color: '#409EFF' },
+      symbol: 'circle',
+      itemStyle: { color: '#409EFF' }
     }
   ]
-});
+})
 
 const barChartOptions = ref<EChartsOption>({
-  title: {
-    // text: '产品销售额对比', // 标题已在卡片头，这里可以省略
-    left: 'center'
-  },
-  tooltip: {
-    trigger: 'axis',
-    axisPointer: {
-      type: 'shadow'
-    }
-  },
-  xAxis: {
-    type: 'category',
-    data: ['产品 A', '产品 B', '产品 C', '产品 D', '产品 E']
-  },
-  yAxis: {
-    type: 'value'
-  },
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+  xAxis: { type: 'category', data: ['产品 A', '产品 B', '产品 C', '产品 D', '产品 E'] },
+  yAxis: { type: 'value' },
   series: [
     {
       name: '销售额',
       type: 'bar',
       data: [500, 780, 400, 650, 900],
-      itemStyle: {
-        color: '#67C23A' // Element Plus Success color
-      }
+      barWidth: '50%',
+      itemStyle: { color: '#67C23A', borderRadius: [5, 5, 0, 0] }
     }
   ]
-});
+})
 
-// 数据和方法（如果有需要从后端获取数据等）
-onMounted(() => {
-  // 可以在这里发起异步请求获取实际数据，然后更新 lineChartOptions.value 和 barChartOptions.value
-  // console.log('Homepage mounted!');
-});
-
+const pieChartOptions = ref<EChartsOption>({
+  tooltip: { trigger: 'item' },
+  legend: { top: '5%', left: 'center' },
+  series: [
+    {
+      name: '用户类型',
+      type: 'pie',
+      radius: ['40%', '70%'],
+      avoidLabelOverlap: false,
+      label: { show: false, position: 'center' },
+      emphasis: {
+        label: { show: true, fontSize: '18', fontWeight: 'bold' }
+      },
+      labelLine: { show: false },
+      data: [
+        { value: 1048, name: '普通用户' },
+        { value: 735, name: 'VIP 用户' },
+        { value: 580, name: '管理员' },
+        { value: 300, name: '游客' }
+      ]
+    }
+  ]
+})
 </script>
 
 <style scoped>
 .dashboard-homepage {
   padding: 20px;
-  background-color: #f0f2f5; /* 浅灰色背景 */
-  min-height: calc(100vh - var(--header-height, 0px) - var(--footer-height, 0px)); /* 保证内容区域至少填满视口高度减去其他固定高度 */
+  background-color: #f4f5f7;
 }
 
-/* 欢迎卡片样式 */
 .welcome-card {
   margin-bottom: 20px;
+  background: linear-gradient(135deg, #e0f7ff, #ffffff);
 }
 
 .welcome-content {
@@ -209,98 +186,88 @@ onMounted(() => {
 }
 
 .avatar img {
-  width: 60px;
-  height: 60px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
+  object-fit: cover;
   margin-right: 20px;
-  object-fit: cover; /* 确保图片不变形 */
 }
 
-.info .greeting {
-  font-size: 20px;
-  font-weight: bold;
-  margin: 0 0 5px 0;
+.greeting {
+  font-size: 22px;
+  font-weight: 600;
   color: #303133;
+  margin: 0 0 5px 0;
 }
 
-.info .tip {
+.tip {
   font-size: 14px;
   color: #606266;
   margin: 0;
 }
 
-/* 统计数据卡片样式 */
-.stats-row {
+.stats-row,
+.charts-row,
+.extra-row {
   margin-bottom: 20px;
 }
 
 .stats-card .el-card__body {
-  padding: 20px; /* 调整卡片内部填充 */
+  padding: 20px;
 }
 
-
-.stats-card .card-content {
+.card-content {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: space-between; /* 图标和文字分列两侧 */
 }
 
-.stats-card .icon {
-  padding: 10px;
-  border-radius: 8px;
-  color: #fff; /* 图标颜色白色 */
+.icon {
+  padding: 12px;
+  border-radius: 12px;
+  color: #fff;
 }
+.icon.primary { background: #409EFF; }
+.icon.success { background: #67C23A; }
+.icon.warning { background: #E6A23C; }
+.icon.danger  { background: #F56C6C; }
 
-.stats-card .icon.primary {
-  background-color: #409EFF; /* Element Plus Primary color */
+.detail {
+  text-align: right;
 }
-.stats-card .icon.success {
-  background-color: #67C23A; /* Element Plus Success color */
-}
-.stats-card .icon.warning {
-  background-color: #E6A23C; /* Element Plus Warning color */
-}
-.stats-card .icon.danger {
-  background-color: #F56C6C; /* Element Plus Danger color */
-}
-
-
-.stats-card .detail {
-  text-align: right; /* 数字和标签右对齐 */
-}
-
-.stats-card .value {
-  font-size: 24px;
+.value {
+  font-size: 26px;
   font-weight: bold;
   color: #303133;
-  margin-bottom: 5px;
 }
-
-.stats-card .label {
+.label {
   font-size: 14px;
   color: #909399;
 }
 
-
-/* 图表区域样式 */
-.charts-row {
-  margin-bottom: 20px;
-}
-
 .chart {
-  height: 300px; /* 必须给图表容器一个高度 */
+  height: 300px;
   width: 100%;
 }
 
-/* 卡片头部样式 */
 .card-header {
+  font-weight: 600;
   font-size: 16px;
-  font-weight: bold;
   color: #303133;
 }
 
-/* 更多区域样式 */
-/* .more-row {
-  margin-bottom: 20px;
-} */
+.extra-row .el-col {
+  display: flex;
+  flex-direction: column;
+}
+.extra-row .el-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.el-card .el-timeline,
+.el-card .chart {
+  flex: 1;
+}
+
 </style>
