@@ -167,30 +167,6 @@ export const asyncRoute = [
 ]
 
 export const coreRoute = [
-  //mqtt
-  {
-    path: '/',
-    component: () => import('@/layout/index.vue'),
-    name: '',
-    meta: {
-      title: '',
-      isShow: true,
-      icon: ''
-    },
-    children: [
-      {
-        path: '/mqtt',
-        component: () => import('@/views/core/mqtt/index.vue'),
-        name: 'Mqtt',
-        meta: {
-          title: 'Mqtt客户端',
-          isShow: true,
-          icon: 'fluent:iot-20-regular'
-        }
-      }
-    ]
-  },
-
   //blog
   {
     path: '/',
@@ -210,6 +186,31 @@ export const coreRoute = [
           title: '博客园',
           isShow: true,
           icon: 'tdesign:broccoli'
+        }
+      }
+    ]
+  },
+
+  //mqtt
+  {
+    path: '/',
+    component: () => import('@/layout/index.vue'),
+    name: '',
+    meta: {
+      title: '',
+      isShow: true,
+      icon: ''
+    },
+    children: [
+      {
+        path: '/mqtt',
+        component: () => import('@/views/core/mqtt/index.vue'),
+        name: 'Mqtt',
+        meta: {
+          title: 'Mqtt客户端',
+          isShow: true,
+          icon: 'fluent:iot-20-regular',
+          roles: ['admin']
         }
       }
     ]
