@@ -48,20 +48,14 @@ public class UserController {
     @GetMapping("info")
     @Operation(summary = "用户信息")
     public SaResult getUserInfo() {
-        return userService.getAuthInfo();
+        Object userInfo = StpUtil.getSession().get("userInfo");
+        return userService.getUserInfo(userInfo);
     }
 
     @GetMapping("getUserInfo")
     @Operation(summary = "用户信息(paiad-admin)")
     public SaResult getAuthInfo() {
-        Map<String, Object> data = new HashMap<>();
-        data.put("userId", "0");
-        data.put("userName", "Admin");
-        data.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
-        data.put("roles", List.of("R_SUPER"));
-        data.put("buttons", List.of("B_CODE1", "B_CODE2", "B_CODE3"));
-
-        return SaResult.data(data).setCode(200).setMsg("请求成功");
+        return userService.getAuthInfo();
     }
 
 

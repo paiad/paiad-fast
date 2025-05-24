@@ -49,8 +49,8 @@ public class User {
     @TableField("gender")
     private Integer gender;
 
-    @TableField("nickname")
-    private String nickname;
+    @TableField("nickName")
+    private String nickName;
 
     @TableField("avatar")
     private String avatar;
