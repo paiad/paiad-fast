@@ -7,7 +7,6 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.crypto.digest.BCrypt;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +16,7 @@ import paiad.mapper.UserMapper;
 import paiad.pojo.dto.LoginDTO;
 import paiad.pojo.po.User;
 import paiad.pojo.vo.UserVO;
-import paiad.service.IUserService;
+import paiad.service.IAuthService;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -27,7 +26,7 @@ import java.util.Map;
 
 @Service
 @Slf4j
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
+public class AuthServiceImpl extends ServiceImpl<UserMapper, User> implements IAuthService {
     @Resource
     private UserMapper userMapper;
 
@@ -97,26 +96,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * 判断当前用户是否登录
      */
     public SaResult isLogin() {
-        return SaResult.data("Is login?:" + StpUtil.isLogin());
-    }
-
-
-    /**
-     * 获取当前用户信息
-     */
-    public SaResult getUserInfo(Object userInfo) {
-        User user = (User) userInfo;
-        UserVO userVO = new UserVO();
-        BeanUtils.copyProperties(user, userVO);
-        log.info("{}", userVO);
-        return SaResult.data(userVO);
+        return SaResult.data("isLogin:" + StpUtil.isLogin());
     }
 
     /**
      * 获取当前用户信息
      */
-    public SaResult getAuthInfo() {
-        UserVO userVO = (UserVO) StpUtil.getSession().get("authInfo");
+    public SaResult getUserInfo() {
+        UserVO userVO = (UserVO) StpUtil.getSession().get("userInfo");
         log.info("{}", userVO);
         return SaResult.data(userVO);
     }

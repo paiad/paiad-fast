@@ -4,15 +4,13 @@ import cn.hutool.crypto.digest.BCrypt;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import paiad.service.IUserService;
-
-import static org.junit.jupiter.api.Assertions.*;
+import paiad.service.IAuthService;
 
 @SpringBootTest
 public class ApplicationTest {
 
     @Resource
-    private IUserService userService;
+    private IAuthService userService;
 
     @Test
     public void testEncodePasswordWithEmptyInput() {

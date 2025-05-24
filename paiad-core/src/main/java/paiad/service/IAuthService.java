@@ -7,12 +7,11 @@ import paiad.pojo.dto.LoginDTO;
 import paiad.pojo.po.User;
 
 
-public interface IUserService extends IService<User> {
+public interface IAuthService extends IService<User> {
     SaResult register(LoginDTO userDTO);
     SaResult login(LoginDTO userDTO, String ipAddress);
     SaResult isLogin();
-    SaResult getUserInfo(Object userInfo);
-    SaResult getAuthInfo();
+    SaResult getUserInfo();
     SaResult getPermission();
     SaResult getRole();
     SaResult logout();
