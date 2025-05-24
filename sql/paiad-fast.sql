@@ -11,7 +11,7 @@
  Target Server Version : 90200 (9.2.0)
  File Encoding         : 65001
 
- Date: 21/05/2025 15:01:35
+ Date: 24/05/2025 18:32:34
 */
 
 SET NAMES utf8mb4;
@@ -61,8 +61,8 @@ CREATE TABLE `paiad_user`  (
 -- ----------------------------
 -- Records of paiad_user
 -- ----------------------------
-INSERT INTO `paiad_user` VALUES (1745938111579, 'admin', '$2a$10$8JPwCNMM8jhi3Tbf83L.i./UwFMX4q0A1AhUetAIHTuLV8kj0G1u6', 'admin@163.com', '18888888888', 'admin', 'user:update,user:get,user:delete,user:add', '0:0:0:0:0:0:0:1', '2025-05-21 14:54:39', 1, 1, 'Admin', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif', '2025-04-29 14:48:31', '2025-05-21 06:54:38');
-INSERT INTO `paiad_user` VALUES (1745938083118, 'paiad', '$2a$10$zSD.jcT3tj4EZb.nW9z1Gu3DjglWAjRCtX08KKNiEsfMPAgepkCya', 'paiad@qq.com', '16666666666', 'user', 'user:update,user:get', '0:0:0:0:0:0:0:1', '2025-05-21 14:27:47', 1, 1, 'Paiad', '	https://gravatar.com/avatar/19310963b4cc243140a076f54843d91c', '2025-04-29 14:48:03', '2025-05-21 06:27:47');
+INSERT INTO `paiad_user` VALUES (1745938111579, 'admin', '$2a$10$8JPwCNMM8jhi3Tbf83L.i./UwFMX4q0A1AhUetAIHTuLV8kj0G1u6', 'admin@163.com', '18888888888', 'admin', 'user:update,user:get,user:delete,user:add', '0:0:0:0:0:0:0:1', '2025-05-24 13:13:10', 1, 1, 'Admin', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif', '2025-04-29 14:48:31', '2025-05-24 05:13:10');
+INSERT INTO `paiad_user` VALUES (1745938083118, 'paiad', '$2a$10$zSD.jcT3tj4EZb.nW9z1Gu3DjglWAjRCtX08KKNiEsfMPAgepkCya', 'paiad@qq.com', '16666666666', 'user', 'user:update,user:get', '0:0:0:0:0:0:0:1', '2025-05-22 04:46:29', 1, 1, 'Paiad', '	https://gravatar.com/avatar/19310963b4cc243140a076f54843d91c', '2025-04-29 14:48:03', '2025-05-21 20:46:29');
 INSERT INTO `paiad_user` VALUES (1925060505236541440, 'test-user', '$2a$10$TQLNxw6KfjTYLXPCipkZpOWKc5tj00.nz624OFiudXHNAg4Ne77ny', NULL, NULL, 'user', 'user:get', '0:0:0:0:0:0:0:1', '2025-05-21 13:57:39', 1, 0, 'Test', '	https://gravatar.com/avatar/19310963b4cc243140a076f54843d91c', '2025-05-21 05:26:05', '2025-05-21 05:57:38');
 
 SET FOREIGN_KEY_CHECKS = 1;
