@@ -17,7 +17,7 @@ import paiad.service.IAuthService;
 @Tag(name = "Auth接口文档")
 public class AuthController {
     @Resource
-    private IAuthService userService;
+    private IAuthService authService;
 
     @Resource
     private HttpServletRequest request;
@@ -25,43 +25,43 @@ public class AuthController {
     @PostMapping("register")
     @Operation(summary = "用户注册")
     public SaResult register(@RequestBody @Valid LoginDTO loginDTO) {
-        return userService.register(loginDTO);
+        return authService.register(loginDTO);
     }
 
     @PostMapping("login")
     @Operation(summary = "用户登录")
     public SaResult login(@RequestBody @Valid LoginDTO loginDTO) {
-        return userService.login(loginDTO, request.getRemoteAddr());
+        return authService.login(loginDTO, request.getRemoteAddr());
     }
 
     @GetMapping("isLogin")
     @Operation(summary = "是否登录")
     public SaResult isLogin() {
-        return userService.isLogin();
+        return authService.isLogin();
     }
 
     @GetMapping("getUserInfo")
     @Operation(summary = "用户信息")
     public SaResult getUserInfo() {
-        return userService.getUserInfo();
+        return authService.getUserInfo();
     }
 
     @GetMapping("permission")
     @Operation(summary = "用户权限")
     public SaResult getPermission() {
-        return userService.getPermission();
+        return authService.getPermission();
     }
 
     @GetMapping("role")
     @Operation(summary = "用户角色")
     public SaResult getRole() {
-        return userService.getRole();
+        return authService.getRole();
     }
 
     @PostMapping("logout")
     @Operation(summary = "用户登出")
     public SaResult logout() {
-        return userService.logout();
+        return authService.logout();
     }
 
     @GetMapping("test")

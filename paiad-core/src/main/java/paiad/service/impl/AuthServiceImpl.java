@@ -83,7 +83,7 @@ public class AuthServiceImpl extends ServiceImpl<UserMapper, User> implements IA
         //登录成功后，将用户的信息放入会话中，方便全局调用
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(user, userVO);
-        StpUtil.getSession().set("authInfo", userVO);
+        StpUtil.getSession().set("userInfo", userVO);
 
         // 更新登录信息
         updateLoginInfo(user.getUserId(), ipAddress, LocalDateTime.now());
@@ -128,10 +128,10 @@ public class AuthServiceImpl extends ServiceImpl<UserMapper, User> implements IA
      * 用户登出
      */
     public SaResult logout() {
-        User user = (User) StpUtil.getSession().get("userInfo");
-        log.info("username为:'{}' 已完成登出", user.getUserName());
+        UserVO userVO = (UserVO) StpUtil.getSession().get("userInfo");
+        log.info("username为:'{}' 已完成登出", userVO.getUserName());
         StpUtil.logout();
-        return SaResult.ok();
+        return SaResult.ok("登出成功");
     }
 
 
