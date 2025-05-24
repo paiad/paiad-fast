@@ -21,10 +21,10 @@ public class StpInterfaceImpl implements StpInterface {
     @Override
     public List<String> getPermissionList(Object loginId, String loginType) {
         User user = (User) StpUtil.getSession().get("userInfo");
-        if (user == null || user.getPermission() == null) {
+        if (user == null || user.getPermissions() == null) {
             return Collections.emptyList();
         }
-        return Arrays.asList(user.getPermission().split(","));
+        return user.getPermissions();
     }
 
     /**
@@ -33,10 +33,10 @@ public class StpInterfaceImpl implements StpInterface {
     @Override
     public List<String> getRoleList(Object loginId, String loginType) {
         User user = (User) StpUtil.getSession().get("userInfo");
-        if (user == null || user.getRole() == null) {
+        if (user == null || user.getRoles() == null) {
             return Collections.emptyList();
         }
-        return Arrays.asList(user.getRole().split(","));
+        return user.getRoles();
     }
 
 }

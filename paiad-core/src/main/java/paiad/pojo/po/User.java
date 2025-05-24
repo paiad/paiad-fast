@@ -2,22 +2,22 @@ package paiad.pojo.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
+import paiad.handler.StringListTypeHandler;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-/**
- * paiad-user表
- * */
-
-@TableName(value = "paiad_user",autoResultMap = true)
 @Data
+@TableName(value = "paiad_user", autoResultMap = true)
 public class User {
-    @TableField("id")
-    private Long id;
 
-    @TableField("username")
-    private String username;
+    @TableField("userId")
+    private Long userId;
+
+    @TableField("userName")
+    private String userName;
 
     @TableField("password")
     private String password;
@@ -28,11 +28,14 @@ public class User {
     @TableField("phone")
     private String phone;
 
-    @TableField("role")
-    private String role;
+    @TableField(value = "roles", typeHandler = StringListTypeHandler.class)
+    private List<String> roles;
 
-    @TableField("permission")
-    private String permission;
+    @TableField(value = "permissions", typeHandler = StringListTypeHandler.class)
+    private List<String> permissions;
+
+    @TableField(value = "buttons", typeHandler = StringListTypeHandler.class)
+    private List<String> buttons;
 
     @TableField("ip_address")
     private String ipAddress;

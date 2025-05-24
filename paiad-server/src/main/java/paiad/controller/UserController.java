@@ -10,11 +10,15 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
-import paiad.pojo.dto.UserDTO;
+import paiad.pojo.dto.LoginDTO;
 import paiad.service.IUserService;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @RestController
-@RequestMapping("/user/")
+@RequestMapping("/auth/")
 @Tag(name = "User接口文档")
 public class UserController {
     @Resource
@@ -25,14 +29,14 @@ public class UserController {
 
     @PostMapping("register")
     @Operation(summary = "用户注册")
-    public SaResult register(@RequestBody @Valid UserDTO userDTO) {
+    public SaResult register(@RequestBody @Valid LoginDTO userDTO) {
         return userService.register(userDTO);
     }
 
     @PostMapping("login")
     @Operation(summary = "用户登录")
-    public SaResult login(@RequestBody @Valid UserDTO userDTO) {
-        return userService.login(userDTO, request.getRemoteAddr());
+    public SaResult login(@RequestBody @Valid LoginDTO loginDTO) {
+        return userService.login(loginDTO, request.getRemoteAddr());
     }
 
     @GetMapping("isLogin")
@@ -44,9 +48,22 @@ public class UserController {
     @GetMapping("info")
     @Operation(summary = "用户信息")
     public SaResult getUserInfo() {
-        Object userInfo = StpUtil.getSession().get("userInfo");
-        return userService.getUserInfo(userInfo);
+        return userService.getAuthInfo();
     }
+
+    @GetMapping("getUserInfo")
+    @Operation(summary = "用户信息(paiad-admin)")
+    public SaResult getAuthInfo() {
+        Map<String, Object> data = new HashMap<>();
+        data.put("userId", "0");
+        data.put("userName", "Admin");
+        data.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+        data.put("roles", List.of("R_SUPER"));
+        data.put("buttons", List.of("B_CODE1", "B_CODE2", "B_CODE3"));
+
+        return SaResult.data(data).setCode(200).setMsg("请求成功");
+    }
+
 
     @GetMapping("permission")
     @Operation(summary = "用户权限")

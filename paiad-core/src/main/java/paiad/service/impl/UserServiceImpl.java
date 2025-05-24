@@ -1,24 +1,26 @@
 package paiad.service.impl;
 
-import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
+import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.crypto.digest.BCrypt;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import paiad.mapper.UserMapper;
-import paiad.pojo.dto.UserDTO;
+import paiad.pojo.dto.LoginDTO;
 import paiad.pojo.po.User;
 import paiad.pojo.vo.UserVO;
 import paiad.service.IUserService;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,20 +34,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     /**
      * 注册用户
      */
-    public SaResult register(UserDTO userDTO) {
+    public SaResult register(LoginDTO userDTO) {
         // 检查用户名是否已存在
-        User existingUser = findByUsername(userDTO.getUsername());
+        User existingUser = findByUsername(userDTO.getUserName());
         if (existingUser != null) {
             return SaResult.error("用户名已存在");
         }
 
         // 创建新用户
         User user = new User();
-        user.setId(generateId());
-        user.setUsername(userDTO.getUsername());
+        user.setUserId(generateId());
+        user.setUserName(userDTO.getUserName());
         user.setPassword(encodePassword(userDTO.getPassword()));
-        user.setRole("user");//默认 role = 'user'
-        user.setPermission("user:get");//默认 permission = 'user:get'
+        user.setRoles(Collections.singletonList("user"));//默认 role = 'user'
+        user.setPermissions(Collections.singletonList("user:get"));//默认 permission = 'user:get'
         user.setStatus(1);
         userMapper.insert(user);
 
@@ -55,9 +57,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     /**
      * 用户登录
      */
-    public SaResult login(UserDTO userDTO, String ipAddress) {
+    public SaResult login(LoginDTO userDTO, String ipAddress) {
         // 根据用户名查询用户
-        User user = findByUsername(userDTO.getUsername());
+        User user = findByUsername(userDTO.getUserName());
         if (user == null) {
             return SaResult.error("用户不存在");
         }
@@ -68,17 +70,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
 
         // 执行登录
-        StpUtil.login(user.getId());
-        log.info("username为:'{}' 已完成登录", userDTO.getUsername());
+        StpUtil.login(user.getUserId());
+        log.info("username为:'{}' 已完成登录", userDTO.getUserName());
         String tokenValue = StpUtil.getTokenValue();
         Map<String, String> tokenMap = new HashMap<>();
+
         tokenMap.put("token", tokenValue);
 
+        // refreshToken
+        tokenMap.put("refreshToken", UUID.randomUUID().toString());
+
+
         //登录成功后，将用户的信息放入会话中，方便全局调用
-        StpUtil.getSession().set("userInfo", user);
+        UserVO userVO = new UserVO();
+        BeanUtils.copyProperties(user, userVO);
+        StpUtil.getSession().set("authInfo", userVO);
 
         // 更新登录信息
-        updateLoginInfo(user.getId(), ipAddress, LocalDateTime.now());
+        updateLoginInfo(user.getUserId(), ipAddress, LocalDateTime.now());
 
         // 返回 Token 信息
         return SaResult.data(tokenMap);
@@ -104,6 +113,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     /**
+     * 获取当前用户信息
+     */
+    public SaResult getAuthInfo() {
+        UserVO userVO = (UserVO) StpUtil.getSession().get("authInfo");
+        log.info("{}", userVO);
+        return SaResult.data(userVO);
+    }
+
+    /**
      * 获取当前用户操作权限
      */
     public SaResult getPermission() {
@@ -124,7 +142,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     public SaResult logout() {
         User user = (User) StpUtil.getSession().get("userInfo");
-        log.info("username为:'{}' 已完成登出", user.getUsername());
+        log.info("username为:'{}' 已完成登出", user.getUserName());
         StpUtil.logout();
         return SaResult.ok();
     }
@@ -158,11 +176,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * 更新登录信息（IP 和登录时间）
      */
     private void updateLoginInfo(Long userId, String ipAddress, LocalDateTime loginTime) {
-        User user = new User();
-        user.setId(userId);
-        user.setIpAddress(ipAddress);
-        user.setLastLoginTime(loginTime);
-        userMapper.updateById(user);
+        userMapper.update(
+                null,
+                new LambdaUpdateWrapper<User>()
+                        .eq(User::getUserId, userId)
+                        .set(User::getIpAddress, ipAddress)
+                        .set(User::getLastLoginTime, loginTime)
+        );
     }
 
     /**
