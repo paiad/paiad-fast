@@ -15,7 +15,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import paiad.mapper.UserMapper;
 import paiad.pojo.dto.LoginDTO;
-import paiad.pojo.po.LoginTokenInfo;
+import paiad.pojo.po.TokenInfo;
 import paiad.pojo.po.User;
 import paiad.pojo.vo.UserVO;
 import paiad.service.IAuthService;
@@ -47,6 +47,8 @@ public class AuthServiceImpl extends ServiceImpl<UserMapper, User> implements IA
         User user = new User();
         user.setUserId(generateId());
         user.setUserName(userDTO.getUserName());
+        user.setGender(0);
+        user.setAvatar("https://gravatar.com/avatar/19310963b4cc243140a076f54843d91c");
         user.setPassword(encodePassword(userDTO.getPassword()));
         user.setRoles(Collections.singletonList("user"));//默认 role = 'user'
         user.setPermissions(Collections.singletonList("user:get"));//默认 permission = 'user:get'
@@ -75,7 +77,7 @@ public class AuthServiceImpl extends ServiceImpl<UserMapper, User> implements IA
         StpUtil.login(user.getUserId());
         log.info("username为:'{}' 已完成登录", userDTO.getUserName());
         String refreshToken = UUID.randomUUID().toString();
-        LoginTokenInfo loginTokenInfo = new LoginTokenInfo(
+        TokenInfo tokenInfo = new TokenInfo(
                 StpUtil.getTokenValue(), refreshToken);
         stringRedisTemplate.opsForValue().set("paiad-token:login:refreshToken:" + refreshToken,
                 user.getUserId().toString(), 7, TimeUnit.DAYS);
@@ -89,7 +91,7 @@ public class AuthServiceImpl extends ServiceImpl<UserMapper, User> implements IA
         updateLoginInfo(user.getUserId(), ipAddress, LocalDateTime.now());
 
         // 返回 Token 信息
-        return SaResult.data(loginTokenInfo);
+        return SaResult.data(tokenInfo);
     }
 
     /**
@@ -100,7 +102,7 @@ public class AuthServiceImpl extends ServiceImpl<UserMapper, User> implements IA
         String userIdStr = stringRedisTemplate.opsForValue().get(redisKey);
 
         if (userIdStr == null || !userIdStr.matches("^\\d+$")) {
-            log.warn("刷新令牌失败，Redis中未找到合法的 userId，对应的key: {}", redisKey);
+            log.warn("刷新令牌失败，Redis中未找到合法的 userId");
             return SaResult.error("无效的 refreshToken");
         }
 

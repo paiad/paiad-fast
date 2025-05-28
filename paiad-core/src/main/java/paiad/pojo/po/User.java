@@ -5,12 +5,13 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import paiad.handler.StringListTypeHandler;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 @TableName(value = "paiad_user", autoResultMap = true)
-public class User {
+public class User implements Serializable {
 
     @TableField("userId")
     private Long userId;
@@ -59,4 +60,6 @@ public class User {
 
     @TableField("update_time")
     private LocalDateTime updateTime;
+
+    private static final long serialVersionUID = 1L;
 }
