@@ -21,16 +21,17 @@ import paiad.pojo.vo.UserVO;
 import paiad.service.IAuthService;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
 public class AuthServiceImpl extends ServiceImpl<UserMapper, User> implements IAuthService {
     @Resource
     private UserMapper userMapper;
+
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
 
     /**
      * 注册用户
@@ -73,9 +74,11 @@ public class AuthServiceImpl extends ServiceImpl<UserMapper, User> implements IA
         // 执行登录
         StpUtil.login(user.getUserId());
         log.info("username为:'{}' 已完成登录", userDTO.getUserName());
+        String refreshToken = UUID.randomUUID().toString();
         LoginTokenInfo loginTokenInfo = new LoginTokenInfo(
-                StpUtil.getTokenValue(),
-                UUID.randomUUID().toString());
+                StpUtil.getTokenValue(), refreshToken);
+        stringRedisTemplate.opsForValue().set("paiad-token:login:refreshToken:" + refreshToken,
+                user.getUserId().toString(), 7, TimeUnit.DAYS);
 
         //登录成功后，将用户的信息放入会话中，方便全局调用
         UserVO userVO = new UserVO();
@@ -87,6 +90,18 @@ public class AuthServiceImpl extends ServiceImpl<UserMapper, User> implements IA
 
         // 返回 Token 信息
         return SaResult.data(loginTokenInfo);
+    }
+
+    /**
+     * 用 freshToken 换新token
+     */
+    public SaResult refreshToken(String refreshToken) {
+        String redisKey = "paiad-token:login:refreshToken:" + refreshToken;
+        Long userId = Long.parseLong(Objects.requireNonNull(stringRedisTemplate.opsForValue().get(redisKey)));
+        StpUtil.login(userId);
+        String newToken = StpUtil.getTokenValue();
+        log.info("User:{}, 获得的新Token:{}", userId, newToken);
+        return SaResult.data(newToken);
     }
 
     /**
