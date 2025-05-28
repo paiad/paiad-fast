@@ -11,9 +11,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import paiad.mapper.UserMapper;
 import paiad.pojo.dto.LoginDTO;
+import paiad.pojo.po.LoginTokenInfo;
 import paiad.pojo.po.User;
 import paiad.pojo.vo.UserVO;
 import paiad.service.IAuthService;
@@ -71,14 +73,9 @@ public class AuthServiceImpl extends ServiceImpl<UserMapper, User> implements IA
         // 执行登录
         StpUtil.login(user.getUserId());
         log.info("username为:'{}' 已完成登录", userDTO.getUserName());
-        String tokenValue = StpUtil.getTokenValue();
-        Map<String, String> tokenMap = new HashMap<>();
-
-        tokenMap.put("token", tokenValue);
-
-        // refreshToken
-        tokenMap.put("refreshToken", UUID.randomUUID().toString());
-
+        LoginTokenInfo loginTokenInfo = new LoginTokenInfo(
+                StpUtil.getTokenValue(),
+                UUID.randomUUID().toString());
 
         //登录成功后，将用户的信息放入会话中，方便全局调用
         UserVO userVO = new UserVO();
@@ -89,7 +86,7 @@ public class AuthServiceImpl extends ServiceImpl<UserMapper, User> implements IA
         updateLoginInfo(user.getUserId(), ipAddress, LocalDateTime.now());
 
         // 返回 Token 信息
-        return SaResult.data(tokenMap);
+        return SaResult.data(loginTokenInfo);
     }
 
     /**

@@ -2,6 +2,7 @@ package paiad.pojo.vo;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  * 用户信息返回对象（UserVO）
  */
 @Data
-public class UserVO {
+public class UserVO implements Serializable {
 
     private Long userId;
 
@@ -25,4 +26,5 @@ public class UserVO {
 
     private List<String> buttons;
 
+    private static final long serialVersionUID = 1L;
 }
