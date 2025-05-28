@@ -97,12 +97,23 @@ public class AuthServiceImpl extends ServiceImpl<UserMapper, User> implements IA
      */
     public SaResult refreshToken(String refreshToken) {
         String redisKey = "paiad-token:login:refreshToken:" + refreshToken;
-        Long userId = Long.parseLong(Objects.requireNonNull(stringRedisTemplate.opsForValue().get(redisKey)));
+        String userIdStr = stringRedisTemplate.opsForValue().get(redisKey);
+
+        if (userIdStr == null || !userIdStr.matches("^\\d+$")) {
+            log.warn("刷新令牌失败，Redis中未找到合法的 userId，对应的key: {}", redisKey);
+            return SaResult.error("无效的 refreshToken");
+        }
+
+        Long userId = Long.parseLong(userIdStr);
+
+        // 登录并生成新 token
         StpUtil.login(userId);
         String newToken = StpUtil.getTokenValue();
         log.info("User:{}, 获得的新Token:{}", userId, newToken);
+
         return SaResult.data(newToken);
     }
+
 
     /**
      * 判断当前用户是否登录
