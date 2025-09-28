@@ -13,7 +13,6 @@
         <module>paiad-core</module>
         <module>paiad-framework</module>
         <module>paiad-server</module>
-        <module>paiad-common</module>
     </modules>
 
     <properties>
